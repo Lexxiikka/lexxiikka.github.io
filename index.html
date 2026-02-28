@@ -431,7 +431,7 @@
             margin-right: 8px;
         }
 
-        .skill-bar-container {
+        .skill-barrcontainer {
             height: 10px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
@@ -445,36 +445,24 @@
             transition: width 2s;
         }
 
-        #python-bar {
-            background: linear-gradient(90deg, #EB7700, #EB7700);
+        #barr1 {
+            background: linear-gradient(90deg, #097200, #00ff00);
         }
 
-        #java-bar {
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
+        #barr2 {
+            background: linear-gradient(90deg, #00eeff, #006efe);
         }
 
-        #css3-bar {
-            background: linear-gradient(90deg, #2258eb, #416ee9);
+        #barr3 {
+            background: linear-gradient(90deg, #ffc343, #ffe600);
         }
 
-        #html5-bar {
-            background: linear-gradient(90deg, #ee6516, #b94909);
+        #barr4 {
+            background: linear-gradient(90deg, #800000, #ff0000);
         }
 
-        #javascript-bar {
-            background: linear-gradient(90deg, #d8c629, #d8c629);
-        }
-
-        #nodejs-bar {
-            background: linear-gradient(90deg, #4c8547, #3e8b37);
-        }
-
-        #typescript-bar {
-            background: linear-gradient(90deg, #2d79c7, #1d62a7);
-        }
-
-        #csharp-bar {
-            background: linear-gradient(90deg, #6921dd, #4b14a3);
+        #barr5 {
+            background: linear-gradient(90deg, #550077, #a200ff);
         }
 
 
@@ -502,33 +490,6 @@
             background: rgba(0, 0, 0, 0.9);
             border-color: rgba(255, 255, 255, 0.8);
         }
-
-        #results-hint {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            width: 180px;
-            text-align: center;
-            pointer-events: none;
-            z-index: 25;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #results-hint::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 10px 10px 10px;
-            border-style: solid;
-            border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
-        }
-
 
         .home-theme #profile-block,
         .home-theme #skills-block {
@@ -810,12 +771,6 @@
                 font-size: 12px;
             }
 
-            #results-hint {
-                width: 150px;
-                font-size: 10px;
-                padding: 6px 10px;
-            }
-
 
             #start-text {
                 font-size: 18px;
@@ -916,23 +871,54 @@
         </div>
 
         <div id="skills-block" class="hidden">
-            <h2 class="skills-title">Великие переключатели</h2>
+            <h2 class="skills-title">Жизненные показатели</h2>
             <div class="skill">
                 <div class="skill-name">
-                    <img src="assets/js.png" alt="JavaScript" class="skill-icon">
-                    <span>unity</span>
-                    <span>45%</span>
+                    <img src="assets/hp.png" alt="img" class="skill-icon">
+                    <span>Очки здоровья</span>
+                    <span>98%</span>
                 </div>
-                <div class="skill-bar-container">
-                    <div id="javascript-bar" class="skill-bar"></div>
+                <div class="skill-barrcontainer">
+                    <div id="barr1" class="skill-bar"></div>
+                </div>
+                <div class="skill-name">
+                    <img src="assets/game.png" alt="img" class="skill-icon">
+                    <span>Желание играть</span>
+                    <span>29%</span>
+                </div>
+                <div class="skill-barrcontainer">
+                    <div id="barr2" class="skill-bar"></div>
+                </div>
+                <div class="skill-name">
+                    <img src="assets/study.png" alt="img" class="skill-icon">
+                    <span>Получение образования</span>
+                    <span>14%</span>
+                </div>
+                <div class="skill-barrcontainer">
+                    <div id="barr3" class="skill-bar"></div>
+                </div>
+                <div class="skill-name">
+                    <img src="assets/star.png" alt="img" class="skill-icon">
+                    <span>Чувство собственного величия</span>
+                    <span>68%</span>
+                </div>
+                <div class="skill-barrcontainer">
+                    <div id="barr4" class="skill-bar"></div>
+                </div>
+                <div class="skill-name">
+                    <img src="assets/code.png" alt="img" class="skill-icon">
+                    <span>Навыки программирования</span>
+                    <span>46%</span>
+                </div>
+                <div class="skill-barrcontainer">
+                    <div id="barr5" class="skill-bar"></div>
                 </div>
             </div>
         </div>
 
-        <!-- <div id="results-button-container">
-            <button id="results-theme">Процентище</button>
-            <div id="results-hint" class="hidden">Переход между страницами</div>
-        </div> -->
+        <div id="results-button-container">
+            <button id="results-theme">Жизненные показатели</button>
+        </div>
 
         <div class="top-controls">
             <div class="volume-control">
@@ -1037,15 +1023,11 @@
             const glitchOverlay = document.querySelector('.glitch-overlay');
             const profileBlock = document.getElementById('profile-block');
             const skillsBlock = document.getElementById('skills-block');
-            const pythonBar = document.getElementById('python-bar');
-            const javaBar = document.getElementById('java-bar');
-            const cssBar = document.getElementById('css3-bar');
-            const htmlBar = document.getElementById('html5-bar');
-            const javascriptBar = document.getElementById('javascript-bar');
-            const nodejsBar = document.getElementById('nodejs-bar');
-            const typescriptBar = document.getElementById('typescript-bar');
-            const csharpBar = document.getElementById('csharp-bar');
-            const resultsHint = document.getElementById('results-hint');
+            const bar1el = document.getElementById('barr1');
+            const bar2el = document.getElementById('barr2');
+            const bar3el = document.getElementById('barr3');
+            const bar4el = document.getElementById('barr4');
+            const bar5el = document.getElementById('barr5');
             const profilePicture = document.querySelector('.profile-picture');
             const profileContainer = document.querySelector('.profile-container');
 
@@ -1337,6 +1319,7 @@
             let isShowingSkills = false;
             resultsButton.addEventListener('click', () => {
                 if (!isShowingSkills) {
+                    resultsButton.innerText = "Нажми чтобы вернуться"
                     gsap.to(profileBlock, {
                         x: -100,
                         opacity: 0,
@@ -1349,19 +1332,16 @@
                                 { x: 100, opacity: 0 },
                                 { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
                             );
-                            gsap.to(pythonBar, { width: '95%', duration: 2, ease: 'power2.out' });
-                            gsap.to(javaBar, { width: '35%', duration: 2, ease: 'power2.out' });
-                            gsap.to(cssBar, { width: '70%', duration: 2, ease: 'power2.out' });
-                            gsap.to(htmlBar, { width: '65%', duration: 2, ease: 'power2.out' });
-                            gsap.to(javascriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-                            gsap.to(nodejsBar, { width: '70%', duration: 2, ease: 'power2.out' });
-                            gsap.to(typescriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-                            gsap.to(csharpBar, { width: '100%', duration: 2, ease: 'power2.out' });
+                            gsap.to(bar1el, { width: '98%', duration: 5, ease: 'power2.out' });
+                            gsap.to(bar2el, { width: '29%', duration: 1, ease: 'power2.out' });
+                            gsap.to(bar3el, { width: '14%', duration: 4, ease: 'power2.out' });
+                            gsap.to(bar4el, { width: '68%', duration: 3, ease: 'power2.out' });
+                            gsap.to(bar5el, { width: '46%', duration: 2, ease: 'power2.out' });
                         }
                     });
-                    resultsHint.classList.remove('hidden');
                     isShowingSkills = true;
                 } else {
+                    resultsButton.innerText = "Жизненные показатели"
                     gsap.to(skillsBlock, {
                         x: 100,
                         opacity: 0,
@@ -1376,7 +1356,6 @@
                             );
                         }
                     });
-                    resultsHint.classList.add('hidden');
                     isShowingSkills = false;
                 }
             });
