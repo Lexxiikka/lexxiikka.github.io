@@ -1037,7 +1037,7 @@
 
             preloadAssets();
 
-            let startMessage = "Загружаем. . .";
+            let startMessage = "Идет подгрузка контента страницы, пожалуйста подождите. . .";
             let startTextContent = '';
             let startIndex = 0;
             let startCursorVisible = true;
@@ -1045,9 +1045,9 @@
             let typewriterComplete = false;
 
             function runStartScreenEffect() {
-                const finalMessage = "Ну же, один клик во имя повелителя.";
+                const finalMessage = "Ну же, один клик во имя повелителя. . .";
                 if (!assetsLoaded) {
-                    startText.textContent = "Загружаем. . .";
+                    startText.textContent = "Идет подгрузка контента страницы, пожалуйста подождите. . .";
                     typeWriterInterval = setTimeout(runStartScreenEffect, 100);
                 } else if (!typewriterComplete) {
                     if (startIndex <= finalMessage.length) {
