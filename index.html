@@ -185,11 +185,11 @@
             bottom: -2px;
             border-radius: 50%;
             background: radial-gradient(circle at 10px 10px,
-                    var(--primary-color, #00CED1) 10%,
+                    var(--primary-color, #ff0000) 23%,
                     transparent 15%);
             animation: orbit 3s linear infinite;
             z-index: -1;
-            filter: blur(1px);
+            filter: blur(7px);
             box-shadow: none;
         }
 
@@ -329,6 +329,7 @@
             position: relative;
             pointer-events: auto;
             opacity: 1 !important;
+            width: 110px;
         }
 
         .visitor-icon {
@@ -493,29 +494,8 @@
 
         .home-theme #profile-block,
         .home-theme #skills-block {
-            border-color: rgba(0, 195, 255, 0.5);
+            border-color: rgb(132, 0, 255);
         }
-
-        .hacker-theme #profile-block,
-        .hacker-theme #skills-block {
-            border-color: rgba(0, 255, 0, 0.5);
-        }
-
-        .rain-theme #profile-block,
-        .rain-theme #skills-block {
-            border-color: rgba(100, 149, 237, 0.5);
-        }
-
-        .anime-theme #profile-block,
-        .anime-theme #skills-block {
-            border-color: rgba(255, 0, 255, 0.5);
-        }
-
-        .car-theme #profile-block,
-        .car-theme #skills-block {
-            border-color: rgba(255, 165, 0, 0.5);
-        }
-
 
         .glitch {
             animation: glitch 0.2s ease-in-out;
@@ -805,6 +785,10 @@
                             <div class="badge-box-inner">
                                 <div class="badge-group">
                                     <div class="badge-container">
+                                        <img src="assets/developer.png" alt="Developer" class="badge">
+                                        <span class="tooltip">Разработчик</span>
+                                    </div>
+                                    <div class="badge-container">
                                         <img src="assets/py.png" alt="Python" class="badge">
                                         <span class="tooltip">Python</span>
                                     </div>
@@ -813,20 +797,16 @@
                                         <span class="tooltip">javascript</span>
                                     </div>
                                     <div class="badge-container">
-                                        <img src="assets/developer.png" alt="Developer" class="badge">
-                                        <span class="tooltip">Разработчик</span>
-                                    </div>
-                                    <div class="badge-container">
                                         <img src="assets/owner.gif" alt="Owner" class="badge">
-                                        <span class="tooltip">Основатель AAL</span>
+                                        <span class="tooltip">Самый важный</span>
                                     </div>
                                     <div class="badge-container">
                                         <img src="assets/aal.png" alt="King" class="badge">
-                                        <span class="tooltip">A A L</span>
+                                        <span class="tooltip">Основатель AAL</span>
                                     </div>
                                     <div class="badge-container">
                                         <img src="assets/staff.gif" alt="staff" class="badge">
-                                        <span class="tooltip">?w</span>
+                                        <span class="tooltip">&L</span>
                                     </div>
 
                                 </div>
@@ -868,8 +848,8 @@
                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                         </path>
                     </svg>
-                    <span id="visitor-count">21234</span>
-                    <span class="tooltip">v?Не читай,@!&^</span>
+                    <span id="visitor-count">987321</span>
+                    <span class="tooltip">?w</span>
                 </div>
             </div>
         </div>
