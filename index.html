@@ -16,7 +16,6 @@
             font-family: 'Underdog', 'Calibri';
         }
 
-
         body {
             background-color: #000;
             color: #fff;
@@ -43,7 +42,6 @@
         .hidden {
             display: none !important;
         }
-
 
         .controls {
             position: fixed;
@@ -79,7 +77,6 @@
             border-color: rgba(255, 255, 255, 0.8);
         }
 
-
         .volume-control {
             display: flex;
             align-items: center;
@@ -113,7 +110,6 @@
             background: white;
             cursor: pointer;
         }
-
 
         .transparency-control {
             display: flex;
@@ -387,7 +383,6 @@
             transform: scale(1.4) rotateY(15deg);
         }
 
-
         #skills-block {
             position: fixed;
             top: 50%;
@@ -465,7 +460,6 @@
         #barr5 {
             background: linear-gradient(90deg, #550077, #a200ff);
         }
-
 
         #results-button-container {
             position: fixed;
@@ -547,7 +541,6 @@
             }
         }
 
-
         .cursor-trail {
             position: fixed;
             pointer-events: none;
@@ -563,7 +556,6 @@
             transform: translate(-50%, -50%);
             transition: opacity 0.3s ease;
         }
-
 
         #start-screen {
             position: fixed;
@@ -704,7 +696,6 @@
                 font-size: 14px;
             }
 
-
             .controls {
                 bottom: 20px;
                 gap: 8px;
@@ -716,7 +707,6 @@
                 height: 28px;
                 font-size: 12px;
             }
-
 
             .top-controls {
                 bottom: 70px;
@@ -745,7 +735,6 @@
                 height: 10px;
             }
 
-
             #results-button-container {
                 top: 10px;
             }
@@ -754,7 +743,6 @@
                 padding: 6px 12px;
                 font-size: 12px;
             }
-
 
             #start-text {
                 font-size: 18px;
@@ -768,7 +756,6 @@
     <div id="start-screen">
         <div id="start-text">Идет подгрузка контента страницы, 0% </div>
     </div>
-
     <div class="container">
         <video id="background" autoplay loop muted playsinline webkit-playsinline>
             <source src="assets/background.mp4" type="video/mp4">
@@ -808,7 +795,6 @@
                                         <img src="assets/staff.gif" alt="staff" class="badge">
                                         <span class="tooltip">dy/dL = y'L</span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -816,11 +802,8 @@
                     <div id="profile-bio"></div>
                 </div>
             </div>
-
             <div class="bio-separator"></div>
-
             <div class="profile-footer">
-
                 <div class="social-links">
                     <a href="https://t.me/hell_is_addict" target="_blank">
                         <img src="assets/telegram.png" alt="Telegram" class="social-icon">
@@ -838,8 +821,6 @@
                         <img src="assets/steam.png" alt="Steam" class="social-icon">
                     </a>
                 </div>
-
-
                 <div class="visitor-counter">
                     <svg class="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -853,7 +834,6 @@
                 </div>
             </div>
         </div>
-
         <div id="skills-block" class="hidden">
             <h2 class="skills-title">Жизненные показатели</h2>
             <div class="skill">
@@ -899,11 +879,9 @@
                 </div>
             </div>
         </div>
-
         <div id="results-button-container">
             <button id="results-theme">Жизненные показатели</button>
         </div>
-
         <div class="top-controls">
             <div class="volume-control">
                 <svg id="volume-icon" class="volume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -915,19 +893,15 @@
             </div>
         </div>
     </div>
-
-
     <audio id="background-music" loop>
         <source type="audio/mp3">
     </audio>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         let hasUserInteracted = false;
         let assetsLoaded = false;
         let totalAssets = 0;
         let loadedAssets = 0;
-
         function initMedia() {
             console.log("initMedia called");
             const backgroundMusic = document.getElementById('background-music');
@@ -938,7 +912,6 @@
             }
             backgroundMusic.volume = 0.3;
         }
-
         function trackAssetLoad() {
             loadedAssets++;
             const loadingPercent = Math.floor((loadedAssets / totalAssets) * 100);
@@ -951,7 +924,6 @@
                 runStartScreenEffect();
             }
         }
-
         function preloadAssets() {
             const assetsToLoad = [
                 'assets/background.mp4',
@@ -969,9 +941,7 @@
                 'assets/youtube.png',
                 'assets/steam.png'
             ];
-
             totalAssets = assetsToLoad.length;
-
             assetsToLoad.forEach(src => {
                 if (src.endsWith('.mp4')) {
                     const video = document.createElement('video');
@@ -993,7 +963,6 @@
                 }
             });
         }
-
         document.addEventListener('DOMContentLoaded', () => {
             const startScreen = document.getElementById('start-screen');
             const startText = document.getElementById('start-text');
@@ -1014,15 +983,12 @@
             const bar5el = document.getElementById('barr5');
             const profilePicture = document.querySelector('.profile-picture');
             const profileContainer = document.querySelector('.profile-container');
-
             preloadAssets();
-
             let startTextContent = '';
             let startIndex = 0;
             let startCursorVisible = true;
             let typeWriterInterval;
             let typewriterComplete = false;
-
             function runStartScreenEffect() {
                 const finalMessage = "Ну же, один клик во имя повелителя. . .";
                 if (!assetsLoaded) {
@@ -1045,7 +1011,6 @@
                 }
             }
             runStartScreenEffect();
-
             startScreen.addEventListener('click', () => {
                 if (!assetsLoaded) {
                     return;
@@ -1069,7 +1034,6 @@
                 typeWriterName();
                 typeWriterBio();
             });
-
             startScreen.addEventListener('touchstart', (e) => {
                 if (!assetsLoaded || !typewriterComplete) {
                     e.preventDefault();
@@ -1093,14 +1057,12 @@
                 typeWriterName();
                 typeWriterBio();
             });
-
             function initializeVisitorCounter() {
                 totalVisitors = Math.floor(Math.random() * 900000) + 100000;
                 visitorCount.textContent = totalVisitors.toLocaleString();
             }
             initializeVisitorCounter();
             setInterval(initializeVisitorCounter, 10);
-
             function AnimatedText(elem, text) {
                 elem.style.opacity = 0;
                 setTimeout(() => {
@@ -1108,7 +1070,6 @@
                     elem.style.opacity = 1;
                 }, 1000);
             }
-
             const names = [
                 "✨ Lexxikka ",
                 "⚰️ Агнец ",
@@ -1129,13 +1090,22 @@
                 "Проблемы с изображениями - очистите кеш браузера",
                 "Ну я хз что сюда ещё писать",
                 "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова",
-                "git push *megre error* git push --force" 
+                "git push *megre error* git push --force"
             ];
-            let name = names[Math.floor(Math.random() * names.length)];
+
+            let lastNamenameIndex = -1;
+            let currentNameIndex = -1;
+            let previousBioIndex = -1;
+            do {
+                currentNameIndex = Math.floor(Math.random() * names.length);
+            } while (currentNameIndex === lastNamenameIndex && names.length > 1);
+            lastNamenameIndex = currentNameIndex;
+            let name = names[currentNameIndex];
             let nameText = '';
             let nameIndex = 0;
             let isNameDeleting = false;
             let nameCursorVisible = true;
+
             function typeWriterName() {
                 if (!isNameDeleting && nameIndex < name.length) {
                     nameText = name.slice(0, nameIndex + 1);
@@ -1149,7 +1119,12 @@
                     return;
                 } else if (nameIndex === 0) {
                     isNameDeleting = false;
-                    name = names[Math.floor(Math.random() * names.length)];
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * names.length);
+                    } while (newIndex === currentNameIndex && names.length > 1);
+                    currentNameIndex = newIndex;
+                    name = names[currentNameIndex];
                 }
                 profileName.textContent = nameText + (nameCursorVisible ? '|' : ' ');
                 if (Math.random() < 0.1) {
@@ -1165,9 +1140,15 @@
 
             let bioText = '';
             let bioIndex = 0;
-            let bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
+            let bioMessageIndex = -1;
+            do {
+                bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
+            } while (bioMessageIndex === previousBioIndex && bioMessages.length > 1);
+            previousBioIndex = bioMessageIndex;
+
             let isBioDeleting = false;
             let bioCursorVisible = true;
+
             function typeWriterBio() {
                 if (!isBioDeleting && bioIndex < bioMessages[bioMessageIndex].length) {
                     bioText = bioMessages[bioMessageIndex].slice(0, bioIndex + 1);
@@ -1181,14 +1162,19 @@
                     return;
                 } else if (bioIndex === 0 && isBioDeleting) {
                     isBioDeleting = false;
-                    bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * bioMessages.length);
+                    } while (newIndex === previousBioIndex && bioMessages.length > 1);
+                    previousBioIndex = newIndex;
+                    bioMessageIndex = newIndex;
                 }
                 profileBio.textContent = bioText + (bioCursorVisible ? '|' : ' ');
                 if (Math.random() < 0.1) {
                     profileBio.classList.add('glitch');
                     setTimeout(() => profileBio.classList.remove('glitch'), 200);
                 }
-                setTimeout(typeWriterBio, isNameDeleting ? 20 : Math.floor(Math.random() * 101) + 30);
+                setTimeout(typeWriterBio, isBioDeleting ? 20 : Math.floor(Math.random() * 101) + 30);
             }
             setInterval(() => {
                 bioCursorVisible = !bioCursorVisible;
@@ -1218,7 +1204,6 @@
                 currentAudio.muted = false;
                 volumeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
             });
-
             function handleTilt(e, element) {
                 const rect = element.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
@@ -1309,7 +1294,6 @@
                     profileContainer.classList.add('orbit');
                 }, 500);
             });
-
             let isShowingSkills = false;
             resultsButton.addEventListener('click', () => {
                 if (!isShowingSkills) {
