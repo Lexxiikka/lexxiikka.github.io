@@ -16,6 +16,17 @@
             font-family: 'Underdog', 'Calibri';
         }
 
+        .home-theme #profile-block,
+        .home-theme #skills-block {
+            border-color: #8e92c6;
+        }
+
+        .profile-container::after {
+            background: radial-gradient(circle at 10px 10px,
+                    var(--primary-color, #b700ff) 23%,
+                    transparent 15%);
+        }
+
         body {
             background-color: #000;
             color: #fff;
@@ -146,7 +157,7 @@
             width: 820px;
             min-height: 332px;
             background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             padding: 20px;
             border-radius: 15px;
             z-index: 20;
@@ -168,8 +179,8 @@
 
         .profile-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
         }
 
         .profile-container::after {
@@ -180,9 +191,7 @@
             right: -2px;
             bottom: -2px;
             border-radius: 50%;
-            background: radial-gradient(circle at 10px 10px,
-                    var(--primary-color, #ff0000) 23%,
-                    transparent 15%);
+
             animation: orbit 3s linear infinite;
             z-index: -1;
             filter: blur(7px);
@@ -194,8 +203,8 @@
         }
 
         .profile-picture {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             object-fit: cover;
             cursor: pointer;
@@ -337,7 +346,7 @@
 
         .visitor-counter .tooltip {
             visibility: hidden;
-            width: 30px;
+            width: 130px;
             background-color: rgba(0, 0, 0, 0.8);
             color: #fff;
             text-align: center;
@@ -347,7 +356,7 @@
             z-index: 100;
             top: -35px;
             left: 50%;
-            margin-left: -15px;
+            margin-left: -63px;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -486,11 +495,6 @@
             border-color: rgba(255, 255, 255, 0.8);
         }
 
-        .home-theme #profile-block,
-        .home-theme #skills-block {
-            border-color: rgb(132, 0, 255);
-        }
-
         .glitch {
             animation: glitch 0.2s ease-in-out;
         }
@@ -608,8 +612,8 @@
             }
 
             .profile-picture {
-                width: 120px;
-                height: 120px;
+                width: 200px;
+                height: 200px;
             }
 
             .profile-info {
@@ -830,7 +834,7 @@
                         </path>
                     </svg>
                     <span id="visitor-count">987321</span>
-                    <span class="tooltip">?w</span>
+                    <span class="tooltip">Now: Mizere theme</span>
                 </div>
             </div>
         </div>
@@ -848,7 +852,7 @@
                 <div class="skill-name">
                     <img src="assets/game.png" alt="img" class="skill-icon">
                     <span>Желание играть</span>
-                    <span>29%</span>
+                    <span>33%</span>
                 </div>
                 <div class="skill-barrcontainer">
                     <div id="barr2" class="skill-bar"></div>
@@ -1071,29 +1075,31 @@
                 }, 1000);
             }
             const names = [
+                "👾 Мизеро ",
                 "✨ Lexxikka ",
                 "⚰️ Агнец ",
                 "💬 Potentate ",
                 "👑 Lex ",
                 "🛠️ HazHot ",
-                "👾 Мизеро "
             ];
             const bioMessages = [
-                "Спасибо господь, что я такой a*уенный ",
+                "С чего бы начать?",
+                "Старая тема была лучше. . .",
+                "Человек, что посвятил себя ГШ, но оказался там не нужен, а С8 перестал быть местом, где можно с радостью провести время. Далее - просто погрещность, что видят ваши глаза. . .",
                 "Лучший работник планеты © FICSIT",
-                "Первый увидивший это творение - мой брат по несчастью ",
-                "Музыка: Molly Moon - Просто забей ",
-                "Третьего сезона MineLovely не будет ",
-                "git push *megre error* git push --force ",
-                "github unban me pls ",
-                "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова ",
-                "4 за столь сложный экзамен это круто! И это я о тебе, у меня 5 ",
-                "Человек, что посвятил себя ГШ, но оказался там не нужен, а С8 перестал быть местом, где можно с радостью провести время. . . ",
-                "Почему я не доверяю собакам? Потому что они издают lie ",
-                "Зачем ты это читаешь? ",
-                "Если вы везде в блоке и хотите извиниться пишите на почту: cojepp3y@dzet.su ",
-                "Ну я хз что сюда ещё писать ",
-                "Проблемы с изображениями - очистите кеш браузера ",
+                "Первый увидивший это творение - мой брат по несчастью",
+                //"Музыка: Molly Moon - Просто забей",
+                "Третьего сезона MineLovely не будет",
+                "git push *megre error* git push --force",
+                "Спасибо господь, что я такой a*уенный",
+                "github unban me pls",
+                "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова",
+                "4 за столь сложный экзамен это круто! И это я о тебе, у меня 5",
+                "Почему я не доверяю собакам? Потому что они издают lie",
+                "Зачем ты это читаешь?",
+                "Если вы везде в блоке и хотите извиниться пишите на почту: cojepp3y@dzet.su",
+                "Ну я хз что сюда ещё писать",
+                "Проблемы с изображениями - очистите кеш браузера",
             ];
             let currentNameIndex = 0;
             let name = names[currentNameIndex];
@@ -1289,7 +1295,7 @@
                                 { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
                             );
                             gsap.to(bar1el, { width: '94%', duration: 5, ease: 'power2.out' });
-                            gsap.to(bar2el, { width: '29%', duration: 1, ease: 'power2.out' });
+                            gsap.to(bar2el, { width: '33%', duration: 1, ease: 'power2.out' });
                             gsap.to(bar3el, { width: '14%', duration: 4, ease: 'power2.out' });
                             gsap.to(bar4el, { width: '68%', duration: 3, ease: 'power2.out' });
                             gsap.to(bar5el, { width: '41%', duration: 2, ease: 'power2.out' });
