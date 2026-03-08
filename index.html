@@ -840,7 +840,7 @@
                 <div class="skill-name">
                     <img src="assets/hp.png" alt="img" class="skill-icon">
                     <span>Очки здоровья</span>
-                    <span>85%</span>
+                    <span>94%</span>
                 </div>
                 <div class="skill-barrcontainer">
                     <div id="barr1" class="skill-bar"></div>
@@ -1073,39 +1073,34 @@
             const names = [
                 "✨ Lexxikka ",
                 "⚰️ Агнец ",
+                "💬 Potentate ",
                 "👑 Lex ",
                 "🛠️ HazHot ",
-                "💬 Potentate "
+                "👾 Мизеро "
             ];
             const bioMessages = [
-                "Музыка: Molly Moon - Просто забей",
-                "Если вы везде в блоке и хотите извиниться пишите на почту: cojepp3y@dzet.su",
-                "Третьего сезона MineLovely не будет",
-                "Спасибо господь, что я такой a*уенный",
-                "Первый увидивший это творение - мой брат по несчастью",
-                "4 за столь сложный экзамен это круто! И это я о тебе, у меня 5",
-                "Зачем ты это читаешь?",
-                "Человек, что посвятил себя ГШ, но оказался там не нужен, а С8 перестал быть местом, где можно с радостью провести время. . .",
-                "github unban me pls",
-                "Проблемы с изображениями - очистите кеш браузера",
-                "Ну я хз что сюда ещё писать",
-                "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова",
-                "git push *megre error* git push --force"
+                "Спасибо господь, что я такой a*уенный ",
+                "Лучший работник планеты © FICSIT",
+                "Первый увидивший это творение - мой брат по несчастью ",
+                "Музыка: Molly Moon - Просто забей ",
+                "Третьего сезона MineLovely не будет ",
+                "git push *megre error* git push --force ",
+                "github unban me pls ",
+                "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова ",
+                "4 за столь сложный экзамен это круто! И это я о тебе, у меня 5 ",
+                "Человек, что посвятил себя ГШ, но оказался там не нужен, а С8 перестал быть местом, где можно с радостью провести время. . . ",
+                "Почему я не доверяю собакам? Потому что они издают lie ",
+                "Зачем ты это читаешь? ",
+                "Если вы везде в блоке и хотите извиниться пишите на почту: cojepp3y@dzet.su ",
+                "Ну я хз что сюда ещё писать ",
+                "Проблемы с изображениями - очистите кеш браузера ",
             ];
-
-            let lastNamenameIndex = -1;
-            let currentNameIndex = -1;
-            let previousBioIndex = -1;
-            do {
-                currentNameIndex = Math.floor(Math.random() * names.length);
-            } while (currentNameIndex === lastNamenameIndex && names.length > 1);
-            lastNamenameIndex = currentNameIndex;
+            let currentNameIndex = 0;
             let name = names[currentNameIndex];
             let nameText = '';
             let nameIndex = 0;
             let isNameDeleting = false;
             let nameCursorVisible = true;
-
             function typeWriterName() {
                 if (!isNameDeleting && nameIndex < name.length) {
                     nameText = name.slice(0, nameIndex + 1);
@@ -1119,11 +1114,7 @@
                     return;
                 } else if (nameIndex === 0) {
                     isNameDeleting = false;
-                    let newIndex;
-                    do {
-                        newIndex = Math.floor(Math.random() * names.length);
-                    } while (newIndex === currentNameIndex && names.length > 1);
-                    currentNameIndex = newIndex;
+                    currentNameIndex = (currentNameIndex + 1) % names.length;
                     name = names[currentNameIndex];
                 }
                 profileName.textContent = nameText + (nameCursorVisible ? '|' : ' ');
@@ -1137,18 +1128,11 @@
                 nameCursorVisible = !nameCursorVisible;
                 profileName.textContent = nameText + (nameCursorVisible ? '|' : ' ');
             }, 500);
-
             let bioText = '';
             let bioIndex = 0;
-            let bioMessageIndex = -1;
-            do {
-                bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
-            } while (bioMessageIndex === previousBioIndex && bioMessages.length > 1);
-            previousBioIndex = bioMessageIndex;
-
+            let bioMessageIndex = 0;
             let isBioDeleting = false;
             let bioCursorVisible = true;
-
             function typeWriterBio() {
                 if (!isBioDeleting && bioIndex < bioMessages[bioMessageIndex].length) {
                     bioText = bioMessages[bioMessageIndex].slice(0, bioIndex + 1);
@@ -1162,12 +1146,7 @@
                     return;
                 } else if (bioIndex === 0 && isBioDeleting) {
                     isBioDeleting = false;
-                    let newIndex;
-                    do {
-                        newIndex = Math.floor(Math.random() * bioMessages.length);
-                    } while (newIndex === previousBioIndex && bioMessages.length > 1);
-                    previousBioIndex = newIndex;
-                    bioMessageIndex = newIndex;
+                    bioMessageIndex = (bioMessageIndex + 1) % bioMessages.length;
                 }
                 profileBio.textContent = bioText + (bioCursorVisible ? '|' : ' ');
                 if (Math.random() < 0.1) {
@@ -1180,7 +1159,6 @@
                 bioCursorVisible = !bioCursorVisible;
                 profileBio.textContent = bioText + (bioCursorVisible ? '|' : ' ');
             }, 500);
-
             let currentAudio = backgroundMusic;
             let isMuted = false;
             volumeIcon.addEventListener('click', () => {
@@ -1310,7 +1288,7 @@
                                 { x: 100, opacity: 0 },
                                 { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
                             );
-                            gsap.to(bar1el, { width: '85%', duration: 5, ease: 'power2.out' });
+                            gsap.to(bar1el, { width: '94%', duration: 5, ease: 'power2.out' });
                             gsap.to(bar2el, { width: '29%', duration: 1, ease: 'power2.out' });
                             gsap.to(bar3el, { width: '14%', duration: 4, ease: 'power2.out' });
                             gsap.to(bar4el, { width: '68%', duration: 3, ease: 'power2.out' });
@@ -1354,7 +1332,6 @@
                             );
                         }
                     });
-                    resultsHint.classList.remove('hidden');
                     isShowingSkills = true;
                 } else {
                     gsap.to(skillsBlock, {
@@ -1371,7 +1348,6 @@
                             );
                         }
                     });
-                    resultsHint.classList.add('hidden');
                     isShowingSkills = false;
                 }
             });
