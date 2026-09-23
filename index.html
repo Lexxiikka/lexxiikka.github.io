@@ -1188,6 +1188,16 @@
             if (loadedProfileAssets >= totalProfileAssets) {
                 profileAssetsLoaded = true;
                 startText.textContent = 'Ну же, один клик во имя повелителя. . .';
+
+                const preloadContainer = document.getElementById('preload-container');
+                if (preloadContainer) {
+                    preloadContainer.querySelectorAll('video, audio').forEach(el => {
+                        el.removeAttribute('src');
+                        el.load();
+                    });
+                    preloadContainer.remove();
+                }
+
                 preloadMusicAssets();
             }
         }
@@ -1206,7 +1216,6 @@
 
         function preloadProfileAssets() {
             const profileAssets = [
-                'assets/background_main.mp4',
                 'assets/music_main.mp3',
                 'assets/profile.png',
                 'assets/developer.png',
@@ -1225,7 +1234,7 @@
                 'assets/blog.png',
                 'assets/icon.png'
             ];
-            totalProfileAssets = profileAssets.length;
+            totalProfileAssets = profileAssets.length + 1;
             const preloadContainer = document.createElement('div');
             preloadContainer.style.display = 'none';
             preloadContainer.id = 'preload-container';
@@ -1335,6 +1344,15 @@
             let currentBgSrc = 'assets/background_main.mp4';
             let bgTransitionTimer = null;
             let bgTransitionId = 0;
+
+            let mainBgTracked = false;
+            const trackMainBg = () => {
+                if (mainBgTracked) return;
+                mainBgTracked = true;
+                trackProfileAssetLoad();
+            };
+            bg1.addEventListener('loadeddata', trackMainBg, { once: true });
+            bg1.addEventListener('error', trackMainBg, { once: true });
 
             bg1.src = currentBgSrc;
             bg1.play().catch(() => { });
