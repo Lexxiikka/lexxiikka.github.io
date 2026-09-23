@@ -1491,7 +1491,7 @@
 
         function preloadProfileAssets() {
             const profileAssets = [
-                'assets/background.mp4',
+                'assets/background_main.mp4',
                 'assets/music_main.mp3',
                 'assets/profile.png',
                 'assets/developer.png',
@@ -1615,7 +1615,7 @@
             const bg2 = document.getElementById('bg-video-2');
             let activeBg = bg1;
             let nextBg = bg2;
-            let currentBgSrc = 'assets/background.mp4';
+            let currentBgSrc = 'assets/background_main.mp4';
             let bgTransitionTimer = null;
             let bgTransitionId = 0;
 
@@ -2015,7 +2015,7 @@
 
                 musicPlayerInitialized = false;
                 currentBgSrc = null;
-                changeBackground('assets/background.mp4');
+                changeBackground('assets/background_main.mp4');
 
                 musicPlayerPanel.classList.remove('slide-up');
                 backBtn.classList.remove('slide-up');
