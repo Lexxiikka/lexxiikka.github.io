@@ -440,7 +440,6 @@
             text-align: center;
         }
 
-        /* --- КНОПКА ПЕРЕХОДА К ПЛЕЕРУ (С ОБЁРТКОЙ ДЛЯ ПОДСКАЗКИ) --- */
         .music-btn-wrapper {
             position: relative;
             display: inline-flex;
@@ -524,11 +523,12 @@
             min-width: 150px;
             justify-content: center;
         }
+
         #debug-time-display:hover {
             border-color: rgba(0, 255, 0, 0.8);
             box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
         }
-        
+
         .debug-seek-btn {
             background: rgba(0, 255, 0, 0.1);
             border: 1px solid rgba(0, 255, 0, 0.3);
@@ -541,12 +541,15 @@
             cursor: pointer;
             transition: background 0.2s, transform 0.1s;
         }
+
         .debug-seek-btn:hover {
             background: rgba(0, 255, 0, 0.25);
         }
+
         .debug-seek-btn:active {
             transform: scale(0.95);
         }
+
         #debug-time-text {
             cursor: pointer;
             min-width: 90px;
@@ -566,22 +569,25 @@
             backdrop-filter: blur(10px);
             display: none;
             flex-direction: column;
-            align-items: stretch; /* Изменено с center на stretch для корректного управления шириной детей */
+            align-items: stretch;
             gap: 14px;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
             min-width: 280px;
         }
+
         #debug-seek-modal.open {
             display: flex;
         }
+
         #debug-seek-modal .modal-title {
             font-family: 'Courier New', monospace;
             font-size: 14px;
             color: rgba(0, 255, 0, 0.7);
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-align: center; /* Сохраняем центрирование текста заголовка */
+            text-align: center;
         }
+
         #debug-seek-modal input {
             font-family: 'Courier New', monospace;
             font-size: 22px;
@@ -596,18 +602,22 @@
             letter-spacing: 2px;
             transition: border-color 0.2s;
         }
+
         #debug-seek-modal input:focus {
             border-color: rgba(0, 255, 0, 0.8);
         }
+
         #debug-seek-modal input::placeholder {
             color: rgba(0, 255, 0, 0.25);
         }
+
         #debug-seek-modal .modal-hint {
             font-family: 'Courier New', monospace;
             font-size: 11px;
             color: rgba(0, 255, 0, 0.35);
-            text-align: center; /* Сохраняем центрирование текста подсказки */
+            text-align: center;
         }
+
         .debug-subs-toggle {
             display: flex;
             align-items: center;
@@ -618,19 +628,22 @@
             cursor: pointer;
             user-select: none;
             width: 100%;
-            justify-content: flex-start; /* Строгое выравнивание содержимого по левому краю */
+            justify-content: flex-start;
         }
+
         .debug-subs-toggle input[type="checkbox"] {
             width: 16px;
             height: 16px;
             accent-color: #0f0;
             cursor: pointer;
         }
+
         #debug-seek-modal .modal-actions {
             display: flex;
             gap: 10px;
             width: 100%;
         }
+
         #debug-seek-modal .modal-actions button {
             flex: 1;
             font-family: 'Courier New', monospace;
@@ -643,17 +656,20 @@
             cursor: pointer;
             transition: background 0.2s;
         }
+
         #debug-seek-modal .modal-actions button:hover {
             background: rgba(0, 255, 0, 0.2);
         }
+
         #debug-seek-modal .modal-actions button.cancel {
             color: rgba(255, 80, 80, 0.7);
             border-color: rgba(255, 80, 80, 0.3);
         }
+
         #debug-seek-modal .modal-actions button.cancel:hover {
             background: rgba(255, 80, 80, 0.15);
         }
-        /* --- ПАНЕЛЬ ПЛЕЕРА: ДВУХКОЛОНОЧНЫЙ LAYOUT --- */
+
         #music-player-panel {
             position: fixed;
             bottom: 60px;
@@ -679,7 +695,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Левая часть: название, автор, громкость */
         .player-left {
             display: flex;
             flex-direction: column;
@@ -704,7 +719,6 @@
             margin-top: 5px;
         }
 
-        /* Правая часть: кнопки управления */
         .player-right {
             display: flex;
             align-items: center;
@@ -747,7 +761,6 @@
             height: 55px;
         }
 
-        /* --- РЕГУЛИРОВКА ГРОМКОСТИ: ИСПРАВЛЕННОЕ ЦЕНТРИРОВАНИЕ --- */
         .player-volume {
             display: flex;
             align-items: center;
@@ -808,7 +821,6 @@
             box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
         }
 
-        /* --- КНОПКА ВОЗВРАТА: ШИРИНА ПРОФИЛЯ, КОМПАКТНАЯ ВЫСОТА, ВНИЗУ --- */
         #back-btn {
             position: fixed;
             bottom: -15px;
@@ -986,7 +998,6 @@
                                         </a>
                                         <span class="tooltip">Основатель AAL</span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -997,30 +1008,22 @@
             <div class="bio-separator"></div>
             <div class="profile-footer">
                 <div class="social-links">
-                    <a href="https://t.me/lexxikka" target="_blank">
-                        <img src="assets/telegram.png" alt="Telegram" class="social-icon">
-                    </a>
-                    <a href="https://t.me/lexxikka_g" target="_blank">
-                        <img src="assets/telegram_group.png" alt="Telegram" class="social-icon">
-                    </a>
-                    <a href="https://discord.gg/pMxY6cSTvw" target="_blank">
-                        <img src="assets/discord.png" alt="Discord" class="social-icon">
-                    </a>
-                    <a href="https://www.youtube.com/@AbsoluteAlonedLex" target="_blank">
-                        <img src="assets/youtube.png" alt="YouTube" class="social-icon">
-                    </a>
-                    <a href="http://steamcommunity.com/profiles/76561198003466378" target="_blank">
-                        <img src="assets/steam.png" alt="Steam" class="social-icon">
-                    </a>
-                    <a href="https://discord.gg/wFmcwHCmnq" target="_blank">
-                        <img src="assets/c44.png" alt="ITD" class="social-icon round">
-                    </a>
-                    <a href="https://xn--d1ah4a.com/@lexxikka" target="_blank">
-                        <img src="assets/itd.png" alt="ITD" class="social-icon round">
-                    </a>
-                    <a href="https://lexxiikka.github.io/advert/" target="_blank">
-                        <img src="assets/blog.png" alt="advert" class="social-icon">
-                    </a>
+                    <a href="https://t.me/lexxikka" target="_blank"><img src="assets/telegram.png" alt="Telegram"
+                            class="social-icon"></a>
+                    <a href="https://t.me/lexxikka_g" target="_blank"><img src="assets/telegram_group.png"
+                            alt="Telegram" class="social-icon"></a>
+                    <a href="https://discord.gg/pMxY6cSTvw" target="_blank"><img src="assets/discord.png" alt="Discord"
+                            class="social-icon"></a>
+                    <a href="https://www.youtube.com/@AbsoluteAlonedLex" target="_blank"><img src="assets/youtube.png"
+                            alt="YouTube" class="social-icon"></a>
+                    <a href="http://steamcommunity.com/profiles/76561198003466378" target="_blank"><img
+                            src="assets/steam.png" alt="Steam" class="social-icon"></a>
+                    <a href="https://discord.gg/wFmcwHCmnq" target="_blank"><img src="assets/c44.png" alt="ITD"
+                            class="social-icon round"></a>
+                    <a href="https://xn--d1ah4a.com/@lexxikka" target="_blank"><img src="assets/itd.png" alt="ITD"
+                            class="social-icon round"></a>
+                    <a href="https://lexxiikka.github.io/advert/" target="_blank"><img src="assets/blog.png"
+                            alt="advert" class="social-icon"></a>
                 </div>
                 <div class="visitor-counter">
                     <svg class="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1117,331 +1120,44 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
-        const musicList = [
-            {
-                title: "I",
-                artist: "DEEP-EX-SENSE",
-                audio: "assets/music__DEEP-EX-SENSE__I.mp3",
-                bg: "assets/background__DEEP-EX-SENSE__I.mp4",
-                subtitles: {
-                    "9.5": "Вечно один",
-                    "10.6": "Вечно один",
-                    "11.5": "С рюкзаком за спиною",
-                    "13.1": "На млечном пути",
-                    "14.1": "Далеко мне до пятиконечных светил",
-                    "16.5": "Все запомнят способный привлечь примитив",
-                    "28.7": "Сомнительное счастье - ",
-                    "29.7": "быть запертым в теле",
-                    "31.0": "В попытках реализовать все идеи",
-                    "33.3": "И каждый из нас уже Бог",
-                    "35.1": "Но тот мир, что храним в голове, ",
-                    "36.8": "не создать за семь дней",
-                    "38.2": "И когда-нибудь я стану сильнее",
-                    "40.5": "Но не в данной вселенной,",
-                    "41.8": "не в данное время",
-                    "42.9": "А пока что тот мир",
-                    "43.9": "что в моей голове",
-                    "45.1": "я всего лишь загружаю на файлообменник",
-                    "64.5": "Ведь больше всех любимы мы одним",
-                    "66.1": "мы собой",
-                    "69.8": "Но я в Стиксе утопну,",
-                    "71.2": "я стать обречен его дном",
-                    "72.9": "Из грехов уличенный в одном:",
-                    "74.8": "в этом мире скучать - моветон",
-                    "76.5": "И все мы одинаковы в погоне за высотами:",
-                    "78.9": `"Смотрите все, особая особа я"`,
-                    "80.8": "Тут нет друзей, если не ловит сотовый",
-                    "82.6": "Отчаяние приходит с опытом",
-                    "84.2": "На радость оставляя только доли сотые",
-                    "86.3": "Наверное, тяжело давать концерты с эшафота",
-                    "88.4": "И, куда бы не пошел, повсюду ненависть к шогготам",
-                    "90.9": "Почему так плохо быть собой,",
-                    "92.3": "но выше кого-то",
-                    "93.2": "Ставить себя нынче норма",
-                    "94.4": "И, что не город, то типичный Готэм",
-                    "105.7": "Вечно один",
-                    "106.8": "Вечно один",
-                    "107.7": "С рюкзаком за спиною",
-                    "109.3": "На млечном пути",
-                    "110.3": "Далеко мне до пятиконечных светил",
-                    "112.7": "Все запомнят способный привлечь примитив",
-                    "124.8": "Вечно один",
-                    "125.9": "Вечно один",
-                    "126.8": "С рюкзаком за спиною",
-                    "128.4": "На млечном пути",
-                    "129.4": "Далеко мне до пятиконечных светил",
-                    "131.8": "Все запомнят способный привлечь примитив",
-                    "144.2": "Ты снова скажешь, будто я нищеброд и нытик",
-                    "146.5": "Это бесплодие успеха, знаешь,",
-                    "148.6": "из тебя ничего не выйдет",
-                    "150.0": "Рядом со мною были -",
-                    "151.3": "взгляды презрения - росли стеною пыли",
-                    "153.3": "Все моральные уроды меня посчитали слабым",
-                    "155.8": "Я не желаю знать их, в рядах устрою отсев",
-                    "158.3": "Не важно сколько денег у тебя, власти и славы",
-                    "160.6": "Когда-нибудь ты просто так же сдохнешь, как все",
-                    "173.0": "Я вырос среди змей",
-                    "174.2": "меня не раз так спасала окраска -",
-                    "176.2": "Все верили я правда коралловый аспид,",
-                    "178.8": "хоть и не долго",
-                    "179.9": "Но нет, мы не шакалы,",
-                    "180.8": "мы просто худые волки",
-                    "201.5": "Кумиры как Боги,",
-                    "202.8": "постеры как иконы",
-                    "204.4": "И каждый из нас - Боконон",
-                    "206.2": "И новый языческий идол сменяет другого",
-                    "209.3": "А старый - уже не канон",
-                    "211.3": "То ты не модный, если нет балахона",
-                    "213.9": "То не модный, если есть балахон",
-                    "216.3": "И когда-то Прометей дал огонь нам",
-                    "218.7": "Но не модно нынче стало тепло",
-                    "220.9": "Вечно один",
-                    "222.0": "Вечно один",
-                    "222.9": "С рюкзаком за спиною",
-                    "224.5": "На млечном пути",
-                    "225.5": "Далеко мне до пятиконечных светил",
-                    "227.9": "Все запомнят способный привлечь примитив",
-                    "240.0": "Вечно один",
-                    "241.1": "Вечно один",
-                    "242.0": "С рюкзаком за спиною",
-                    "243.6": "На млечном пути",
-                    "244.6": "Далеко мне до пятиконечных светил",
-                    "247.0": "Все запомнят способный привлечь примитив",
-                    "249.4": "Я, как шиноби, я покидаю тень",
-                    "252.3": "Разворачивая трупный мешок",
-                    "255.1": "Я покидаю тень",
-                    "257.3": "Очень приятно, Киссшот",
-                    nextwait: 4,
-                    minwait: 2,
-                }
-            },
-            {
-                title: "Человек бензопила",
-                artist: "WarVoid & KarVoil",
-                audio: "assets/music__WarVoid__Человек_бензопила.mp3",
-                bg: "assets/background__WarVoid__Человек_бензопила.mp4",
-                subtitles: {
-                    "63.7": "Дай работу тому",
-                    "65.1": "У кого всё отняли",
-                    "66.4": "Хоть что-то тому",
-                    "67.8": "У кого и не было",
-                    "69.6": "И они шагнут за тобой в преисподнюю",
-                    "72.2": "Подчинение? Нет! Это преданность.",
-                    "74.6": "Пёс верный хозяина не предаст",
-                    "77.3": "Дайте еды и отдайте приказ",
-                    "79.5": "И всё - ты его спас",
-                    "80.5": "И он уже счастлив",
-                    "82.5": "Какая бескрайняя власть!",
-                    "127.7": "Дай работу тому",
-                    "129.1": "У кого всё отняли",
-                    "130.4": "Хоть что-то тому",
-                    "131.8": "У кого и не было",
-                    "133.6": "И они шагнут за тобой в преисподнюю",
-                    "136.2": "Подчинение? Нет! Это преданность.",
-                    "138.6": "Пёс верный хозяина не предаст",
-                    "141.3": "Дайте еды и отдайте приказ",
-                    "143.5": "И всё - ты его спас",
-                    "144.6": "И он уже счастлив",
-                    "146.5": "Какая бескрайняя власть!",
-                    "148.9": "Дай работу тому",
-                    "150.3": "У кого всё отняли",
-                    "151.6": "Хоть что-то тому",
-                    "153.0": "У кого и не было",
-                    "154.8": "И они шагнут за тобой в преисподнюю",
-                    "157.4": "Подчинение? Нет! Это преданность.",
-                    "159.8": "Пёс верный хозяина не предаст",
-                    "162.5": "Дайте еды и отдайте приказ",
-                    "164.7": "И всё - ты его спас",
-                    "165.7": "И он уже счастлив",
-                    "167.7": "Какая бескрайняя власть!",
-                    nextwait: 4,
-                    minwait: 2,
-                }
-            },
-            {
-                title: "Незнакомы",
-                artist: "Наше последнее лето",
-                audio: "assets/music__Наше_Последнее_Лето__Незнакомы.mp3",
-                bg: "assets/background__Наше_Последнее_Лето__Незнакомы.mp4",
-                subtitles: {
-                    "14.1": "Мы расстаёмся.",
-                    "16.2": "Не на месяц,",
-                    "18.1": "Не на время,",
-                    "20.0": "Навсегда!",
-                    "21.6": "Теперь будто не знакомы,",
-                    "23.9": "Вылезти из комы,",
-                    "25.9": "Сложное решение было:",
-                    "28.1": "Просто уйти...",
-                    "52.2": "Всё казалось таким простым",
-                    "54.1": "Будто бы зеленей трава",
-                    "56.1": "Растворялись словно дым",
-                    "58.0": "Так горели глаза",
-                    "60.0": "Вспоминаю щас каждый день",
-                    "62.0": "И жалею лишь об одном",
-                    "63.8": "Будто бы еле видна тень",
-                    "65.7": "Всё отдал на потом",
-                    "68.0": "Мы расстаёмся.",
-                    "70.1": "Не на месяц,",
-                    "72.0": "Не на время,",
-                    "74.0": "Навсегда!",
-                    "76.0": "Теперь будто не знакомы,",
-                    "78.0": "Выдезти из комы,",
-                    "80.0": "Сложное решение было:",
-                    "82.0": "Просто уйти...",
-                    nextwait: 4,
-                    minwait: 2,
-                }
-            },
-            {
-                title: "A Little Bit Bad",
-                artist: "ItAllCanWait feat. Gamma BadArt",
-                audio: "assets/music__ItAllCanWait__A_Little_Bit_Bad.mp3",
-                bg: "assets/background__ItAllCanWait__A_Little_Bit_Bad.mp4",
-                subtitles: {
-                    "16.7": "Это кайф = кайф быть немного",
-                    "19.8": "Немного плохой",
-                    "21.0": "Хорошо бы дальше тоже",
-                    "23.8": "Остаться такой",
-                    "29.7": "Ну какой-же кайф быть",
-                    "32.1": "Немного пло-",
-                    "33.1": "немного плохой!",
-                    "47.8": "Не искажай то, что я сказала.",
-                    "49.9": "Страданья ждут!",
-                    "53.0": "Свету рада,",
-                    "54.2": "Грому рада,",
-                    "55.4": "Рада злобе,",
-                    "56.3": "Рада страху!",
-                    "57.4": "Да и хаосу я рада,",
-                    "59.6": "Оскорбляю всех как надо.",
-                    "62.4": "И спастись не дам",
-                    "64.6": "Но если правда вам нужна -",
-                    "66.5": "Признать пора:",
-                    "68.9": "Это кайф = кайф быть немного",
-                    "72.0": "Немного плохой",
-                    "73.2": "Хорошо бы дальше тоже",
-                    "76.0": "Остаться такой.",
-                    "81.9": "Ну какой-же кайф быть",
-                    "84.3": "Немного пло-",
-                    "85.3": "немного плохой!",
-                    "102.2": "Это кайф = кайф быть немного",
-                    "105.3": "Немного плохой",
-                    "106.5": "Хорошо бы дальше тоже",
-                    "109.3": "Остаться такой",
-                    "115.2": "Ну какой-же кайф быть",
-                    "117.6": "Немного пло-",
-                    "118.6": "немного плохой",
-                    "120.8": "Побыть немного плохой",
-                    "125.1": "Побыть немного плохой",
-                    "134.6": "Немного пло-",
-                    "135.6": "немного плохой",
-                    nextwait: 4,
-                    minwait: 2,
-                }
-            },
-            {
-                title: "Друзья",
-                artist: "СТИНТ & KSB Music",
-                audio: "assets/music__Стинт__Друзья.mp3",
-                bg: "assets/background__Стинт__Друзья.mp4",
-                subtitles: {
-                    "2.0": { "text": "Фон не подходит, да, ну и что ты мне сделаешь?", "glow": "#81a99b" },
-                    "11.9": "Странная штука эта ваша дружба,",
-                    "14.8": "Разные люди находят коннект:",
-                    "17.8": "Скины и нефоры, панки и рэперы,",
-                    "20.8": "Много историй — значит, много друзей",
-                    "23.1": { "text": "Вот мои кенты своровали из Магнита", "glow": "red" },
-                    "26.3": { "text": "Портвейн, «Доширак» и пачку молока", "glow": "#8B4513" },
-                    "28.9": { "text": "Нажрались на площадке,", "glow": "#D2B48C" },
-                    "30.6": { "text": "пьяные свиньи,", "glow": "#F5F5DC" },
-                    "32.3": { "text": "и пошли блевать у городка", "glow": "gray" },
-                    "34.9": { "text": "На Новый год собрались мы на кухне,", "glow": "#008c1a" },
-                    "38.0": "и тут Илюха решил выдать тост",
-                    "40.3": { "text": "(Щас скажу)", "glow": "black" },
-                    "41.1": "Но, к сожалению,",
-                    "42.6": "мы не дослушали,",
-                    "43.9": { "text": "ведь Тоха от тоста словил токсикоз", "glow": "#084a0e" },
-                    "47.1": { "text": "Хоть мои друзья — сборище тварей,", "glow": "green" },
-                    "50.1": { "text": "и после смерти  и им гореть в аду", "glow": "#fe9410" },
-                    "53.0": "Но я точно знаю, я точно знаю:",
-                    "55.9": "таких долбоёбов я найти не смогу",
-                    "59.1": { "text": "Хоть мои друзья — сборище тварей,", "glow": "green" },
-                    "62.1": { "text": "и после смерти им гореть в аду", "glow": "#fe9410" },
-                    "64.9": "Но вот проблема: что бы то ни было,",
-                    "68.2": { "text": "я их всех очень люблю,", "glow": "red" },
-                    "71.2": { "text": "очень люблю", "glow": "red" },
-                    "71.9": "Все как на подбор: дрыщ, дылда и жирный забавный хоббит",
-                    "75.0": "Один слушает Макана,",
-                    "76.4": "а второй вырос на Гробе",
-                    "77.9": { "text": "Саня — шиз и псих,", "glow": "white" },
-                    "79.0": { "text": "Илюхе, блядь, нельзя вообще алкашку", "glow": "yellow" },
-                    "80.8": { "text": "Что курило небо,", "glow": "#87CEEB" },
-                    "82.0": "когда создало мою компашку?",
-                    "84.0": { "text": "Я за них хоть в рай,", "glow": "white" },
-                    "84.9": { "text": "хоть в преисподнею — мне просто похуй", "glow": "#fe9410" },
-                    "86.8": { "text": "Конченые в край,", "glow": "green" },
-                    "87.9": { "text": "да я не против, суки, за вас сдохнуть", "glow": "black" },
-                    "89.9": { "text": "Вечно молодые,", "glow": "#87CEEB" },
-                    "91.0": { "text": "вечно пьяные", "glow": "yellow" },
-                    "92.0": { "text": "тупые морды", "glow": "#F5F5DC" },
-                    "92.9": "Лучше б наши мамки сделали, пока могли, аборты!",
-                    "98.1": { "text": "Хоть мои друзья — сборище тварей,", "glow": "green" },
-                    "101.2": { "text": "и после смерти им гореть в аду", "glow": "#fe9410" },
-                    "104.0": "Но я точно знаю, я точно знаю:",
-                    "107.0": "таких долбоёбов я найти не смогу",
-                    "110.0": { "text": "Хоть мои друзья — сборище тварей,", "glow": "green" },
-                    "113.1": { "text": "и после смерти им гореть в аду", "glow": "#fe9410" },
-                    "115.9": "Но вот проблема: что бы то ни было,",
-                    "119.2": { "text": "я их всех очень люблю,", "glow": "red" },
-                    "122.2": { "text": "очень люблю", "glow": "red" },
-                    nextwait: 7,
-                    minwait: 2,
-                }
-            },
-        ];
-        
-        const names = [
-            "✨ Lexxikka",
-            "🎉 Агнец",
-            "💬 potentate",
-            "👑 Lex",
-            "🛠️ HazHot"
-        ];
+        let musicList = [];
+        let names = [];
+        let quotes = [];
 
-        const quotes = [
-            "С чего бы мне лучше начать?",
-            "Нимб не подходит к          рогам.",
-            "Я добрый человек, не с кем не хочу ссориться, так что если я был с вами груб или резок, поработайте над собой, и мне не придется вести себя так снова",
-            "Мой запах, - стопроцентный кортизол",
-            "Я человек, что посвятил себя ГШ, но оказался там не нужен, а С8 перестал быть местом, где можно с радостью провести время. . .",
-            "Центральный комитет С44 принял меня, приютил, повысил до Адъютанта, это победа, но когда она будет?",
-            //"Саргон, почему ты так со мной? Я думал мы друзья...",
-            "Нужда друзей: моя > твоя",
-            //"Поиграй со мной в Subnautica 2",
-            //"До меня дошли слухи, что это я расформировал m.o.r.t.i.s., это правда?",
-            //"Лучший работник планеты © FICSIT",
-            "Первый увидивший это творение - мой брат по несчастью",
-            //"Мне грусно, что люди по умолчанию считают меня обычным... Один только Бести назвал меня другом на рассвете новой эры, но как долго она продлится? ",
-            "Третьего сезона MineLovely не будет",
-            //"Работа не волк, работа это work, walk это ходить",
-            //"git rebase -i",
-            "Пришла беда - закрой ворота нахуй дома никого нет",
-            "Спасибо господь, что я такой aхуенный",
-            //"И пообещал бог мужчине, что хороших и послушных жён можно будет найти в любом уголке земли,      и сделал землю круглой.",
-            //"Делу - время, потехе хе хе хе хе              че ржешь блять",
-            //"Люди - пешки,     на орешки",
-            "Мне похуй на день влюбленных, вот был бы день самовлюбленных, я бы загулял., да...",
-            //"Кто бы мог подумать, что в деревне будет пиздатый интернет, а в городе его нахуй не будет",
-            //"Почему я не доверяю собакам? - Они издают lie",
-            //"Рабы системы бухают в субботу, свободные личности не обращают внимание на такие мелочи жизни как дни недели.",
-            //"Никогда не пей снотворное и слабительное. - Почему? - Проснешься узнаешь",
-            //"Воду пить нельзя, в ней рыбы ебуться",
-            `Но всё же, как бы высоко ты не взлетал, помни, за кем ты бегал и кричал - "Быстро млашим лейтенантом стал!" `,
-            "Чем больше сыр, тем больше дырок, чем больше дырок, тем меньше сыра.                     Задумайтесь.",
-            //"У каждого человека минимум 2 бабушки, а в сказках их бывает до 7, как гномов. - Или до 12 как месяцев. - Но до 12 нужно обязательно вернуться с бала иначе карета превратиться в тыкву. - Это если один бал а если 7 или 8 балов это уже землятрясение!",
-            "Tratepokon You Ciralcen это шифр слогами",
-            //"Пичупидо!",
-            "Дочитал до сюда? Давай по новой!",
-        ];
+        async function loadMusicConfig() {
+            try {
+                const response = await fetch('music_config.json', { cache: 'no-cache' });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                if (!Array.isArray(data)) {
+                    throw new Error('music_config.json должен содержать массив треков');
+                }
+                musicList = data;
+                console.log(`[music_config] Загружено треков: ${musicList.length}`);
+            } catch (err) {
+                console.error('[music_config] Ошибка загрузки music_config.json:', err);
+                musicList = [];
+            }
+        }
+
+        async function loadTextConfig() {
+            try {
+                const response = await fetch('text_config.json', { cache: 'no-cache' });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                names = Array.isArray(data.names) ? data.names : [];
+                quotes = Array.isArray(data.quotes) ? data.quotes : [];
+                console.log(`[text_config] Имён: ${names.length}, цитат: ${quotes.length}`);
+            } catch (err) {
+                console.error('[text_config] Ошибка загрузки text_config.json:', err);
+                names = ["Lexxikka"];
+                quotes = ["..."];
+            }
+        }
 
         let profileAssetsLoaded = false;
         let musicAssetsLoaded = false;
@@ -1472,7 +1188,6 @@
             if (loadedProfileAssets >= totalProfileAssets) {
                 profileAssetsLoaded = true;
                 startText.textContent = 'Ну же, один клик во имя повелителя. . .';
-
                 preloadMusicAssets();
             }
         }
@@ -1549,8 +1264,8 @@
                 'assets/voice.png',
             ];
             musicList.forEach(track => {
-                musicAssets.push(track.audio);
-                musicAssets.push(track.bg);
+                if (track.audio) musicAssets.push(track.audio);
+                if (track.bg) musicAssets.push(track.bg);
             });
             totalMusicAssets = musicAssets.length;
 
@@ -1585,7 +1300,9 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([loadMusicConfig(), loadTextConfig()]);
+
             initMedia();
             const startScreen = document.getElementById('start-screen');
             const startText = document.getElementById('start-text');
@@ -1739,6 +1456,10 @@
             audio1.volume = 0; audio2.volume = 0;
 
             function crossfadeToTrack(index) {
+                if (!musicList.length) {
+                    console.warn('[player] musicList пуст — трек не может быть запущен');
+                    return;
+                }
                 if (isCrossfading) {
                     gsap.killTweensOf([activeAudio, nextAudio]);
                     activeAudio.pause();
@@ -1828,12 +1549,14 @@
             }
 
             function playNext() {
+                if (!musicList.length) return;
                 let nextIndex = currentTrackIndex + 1;
                 if (nextIndex >= musicList.length) nextIndex = 0;
                 crossfadeToTrack(nextIndex);
             }
 
             function playPrev() {
+                if (!musicList.length) return;
                 let prevIndex = currentTrackIndex - 1;
                 if (prevIndex < 0) prevIndex = musicList.length - 1;
                 crossfadeToTrack(prevIndex);
@@ -1891,7 +1614,10 @@
                 }
 
                 subsTextEl.textContent = displayText;
-                if (glowColor) {
+
+                if (typeof glowColor === 'string' && glowColor.trim().toLowerCase() === 'none') {
+                    subsTextEl.style.textShadow = 'none';
+                } else if (glowColor) {
                     subsTextEl.style.textShadow = `
                         0 0 10px ${glowColor},
                         0 0 20px ${glowColor},
@@ -1972,8 +1698,7 @@
             }
 
             moreMusicBtn.addEventListener('click', () => {
-
-                if (!musicAssetsLoaded) {
+                if (!musicAssetsLoaded || musicList.length === 0) {
                     musicLoadingTooltip.classList.add('visible');
                     setTimeout(() => {
                         musicLoadingTooltip.classList.remove('visible');
@@ -2104,6 +1829,10 @@
             let currentNameIndex = 0; let name = names[currentNameIndex];
             let nameText = ''; let nameIndex = 0; let isNameDeleting = false; let nameCursorVisible = true;
             function typeWriterName() {
+                if (names.length === 0 || !name) {
+                    profileName.textContent = 'Lexxikka';
+                    return;
+                }
                 if (!isNameDeleting && nameIndex < name.length) { nameText = name.slice(0, nameIndex + 1); nameIndex++; }
                 else if (isNameDeleting && nameIndex > 0) { nameText = name.slice(0, nameIndex - 1); nameIndex--; }
                 else if (nameIndex === name.length) { isNameDeleting = true; setTimeout(typeWriterName, 5000); return; }
@@ -2251,7 +1980,7 @@
             });
 
             debugTimeText.addEventListener('click', openSeekModal);
-            
+
             document.getElementById('debug-seek-back').addEventListener('click', (e) => {
                 e.stopPropagation();
                 const audio = activeAudio;
