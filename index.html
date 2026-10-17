@@ -1475,127 +1475,13 @@
 
             audio1.volume = 0; audio2.volume = 0;
 
-            function crossfadeToTrack(index) {
-                if (!musicList.length) {
-                    console.warn('[player] musicList пуст — трек не может быть запущен');
-                    return;
-                }
-                if (isCrossfading) {
-                    gsap.killTweensOf([activeAudio, nextAudio]);
-                    activeAudio.pause();
-                    activeAudio.currentTime = 0;
-                    nextAudio.pause();
-                    nextAudio.currentTime = 0;
-                    nextAudio.volume = 0;
-                    activeAudio.volume = targetVolume;
-                    isCrossfading = false;
-                }
-
-                isCrossfading = true;
-                currentTrackIndex = index;
-                const track = musicList[currentTrackIndex];
-
-                trackTitleEl.textContent = track.title;
-                trackArtistEl.textContent = track.artist;
-                changeBackground(track.bg);
-
-                stopSubsChecker();
-
-                nextAudio.src = track.audio;
-                nextAudio.volume = 0;
-                nextAudio.currentTime = 0;
-                nextAudio.play().catch(() => { });
-
-                gsap.to(activeAudio, {
-                    volume: 0, duration: 1, ease: 'power1.inOut',
-                    onComplete: () => {
-                        activeAudio.pause();
-                        activeAudio.currentTime = 0;
-                    }
-                });
-
-                gsap.to(nextAudio, {
-                    volume: targetVolume, duration: 1, ease: 'power1.inOut',
-                    onComplete: () => {
-                        let temp = activeAudio;
-                        activeAudio = nextAudio;
-                        nextAudio = temp;
-                        isPlaying = true;
-                        playPauseIcon.src = 'assets/pause.png';
-                        isCrossfading = false;
-                        startSubsChecker();
-                    }
-                });
-            }
-
-            let pauseCooldown = false;
-
-            function togglePlayPause() {
-                if (activeAudio.paused) {
-                    activeAudio.play();
-                    isPlaying = true;
-                    playPauseIcon.src = 'assets/pause.png';
-                    pauseCooldown = true;
-                    setTimeout(() => { pauseCooldown = false; }, 1000);
-                    if (subsCheckInterval) {
-                        clearInterval(subsCheckInterval);
-                    }
-                    subsCheckInterval = setInterval(checkSubsTime, 250);
-                } else {
-                    if (pauseCooldown && !debugVisible) return;
-
-                    activeAudio.pause();
-                    isPlaying = false;
-                    playPauseIcon.src = 'assets/play.png';
-                    if (subsTimer) {
-                        clearTimeout(subsTimer);
-                        subsTimer = null;
-                    }
-                    if (subsCheckInterval) {
-                        clearInterval(subsCheckInterval);
-                        subsCheckInterval = null;
-                    }
-                    if (subsAnimationLocked) {
-                        subsTextEl.classList.remove('show');
-                        subsTextEl.classList.add('hide');
-                        subsAnimationLocked = false;
-                        setTimeout(() => {
-                            subsTextEl.className = '';
-                        }, 300);
-                    } else {
-                        subsTextEl.className = '';
-                    }
-                }
-            }
-
-            function playNext() {
-                if (!musicList.length) return;
-                let nextIndex = currentTrackIndex + 1;
-                if (nextIndex >= musicList.length) nextIndex = 0;
-                crossfadeToTrack(nextIndex);
-            }
-
-            function playPrev() {
-                if (!musicList.length) return;
-                let prevIndex = currentTrackIndex - 1;
-                if (prevIndex < 0) prevIndex = musicList.length - 1;
-                crossfadeToTrack(prevIndex);
-            }
-
-            function handleAudioEnded(e) {
-                if (!isCrossfading && e.target === activeAudio) {
-                    playNext();
-                }
-            }
-            audio1.addEventListener('ended', handleAudioEnded);
-            audio2.addEventListener('ended', handleAudioEnded);
-
             const subsTextEl = document.getElementById('subtitles-text');
             const SUBS_DISPLAY_DURATION = 4;
             let subsTimer = null;
             let subsCheckInterval = null;
             let currentSubsKey = null;
-            let subsAnimationLocked = false;
+            let lastCheckTime = 0;
+            let subsEnabled = true;
 
             function getCurrentSubtitles() {
                 const track = musicList[currentTrackIndex];
@@ -1603,26 +1489,7 @@
             }
 
             function showSubsText(key, entry) {
-                if (subsAnimationLocked) {
-                    subsTextEl.classList.remove('show');
-                    subsTextEl.classList.add('hide');
-                    currentSubsKey = key;
-                    if (subsTimer) {
-                        clearTimeout(subsTimer);
-                        subsTimer = null;
-                    }
-                    setTimeout(() => {
-                        subsTextEl.className = '';
-                        subsTextEl.style.textShadow = '';
-                        subsAnimationLocked = false;
-                        currentSubsKey = null;
-                        showSubsText(key, entry);
-                    }, 300);
-                    return;
-                }
-
                 currentSubsKey = key;
-                subsAnimationLocked = true;
 
                 let displayText, glowColor;
                 if (typeof entry === 'object' && entry !== null && entry.text) {
@@ -1656,19 +1523,18 @@
                 subsTimer = setTimeout(() => {
                     subsTextEl.classList.remove('show');
                     subsTextEl.classList.add('hide');
-                    subsAnimationLocked = false;
                     currentSubsKey = null;
                     setTimeout(() => {
-                        subsTextEl.className = '';
-                        subsTextEl.style.textShadow = '';
+                        if (!subsTextEl.classList.contains('show')) {
+                            subsTextEl.className = '';
+                            subsTextEl.style.textShadow = '';
+                        }
                     }, 300);
                 }, SUBS_DISPLAY_DURATION * 1000);
             }
 
-            let subsEnabled = true;
-
             function checkSubsTime() {
-                if (!isPlaying || isCrossfading || !subsEnabled) return;
+                if (!isPlaying || !subsEnabled) return;
 
                 const subtitles = getCurrentSubtitles();
                 if (!subtitles) {
@@ -1676,29 +1542,47 @@
                         subsTextEl.classList.remove('show');
                         subsTextEl.classList.add('hide');
                         currentSubsKey = null;
-                        setTimeout(() => { subsTextEl.className = ''; }, 300);
+                        setTimeout(() => {
+                            if (!subsTextEl.classList.contains('show')) {
+                                subsTextEl.className = '';
+                                subsTextEl.style.textShadow = '';
+                            }
+                        }, 300);
                     }
                     return;
                 }
 
                 const currentTime = activeAudio.currentTime;
-                let triggeredKey = null;
+
+                if (currentTime < lastCheckTime - 0.05) {
+                    lastCheckTime = currentTime;
+                    return;
+                }
+
+                let latestKey = null;
+                let latestTime = -Infinity;
 
                 for (const key in subtitles) {
-                    const time = parseFloat(key);
-                    if (currentTime >= time && currentTime < time + 0.2) {
-                        triggeredKey = key;
-                        break;
+                    const t = parseFloat(key);
+                    if (isNaN(t)) continue;
+                    if (t > lastCheckTime && t <= currentTime + 0.001) {
+                        if (t > latestTime) {
+                            latestTime = t;
+                            latestKey = key;
+                        }
                     }
                 }
 
-                if (triggeredKey && currentSubsKey !== triggeredKey) {
-                    showSubsText(triggeredKey, subtitles[triggeredKey]);
+                lastCheckTime = currentTime;
+
+                if (latestKey && currentSubsKey !== latestKey) {
+                    showSubsText(latestKey, subtitles[latestKey]);
                 }
             }
 
             function startSubsChecker() {
                 stopSubsChecker();
+                lastCheckTime = activeAudio.currentTime;
                 subsCheckInterval = setInterval(checkSubsTime, 100);
             }
 
@@ -1711,11 +1595,139 @@
                     clearTimeout(subsTimer);
                     subsTimer = null;
                 }
-                subsTextEl.className = '';
-                subsTextEl.style.textShadow = '';
                 currentSubsKey = null;
-                subsAnimationLocked = false;
+                if (subsTextEl.classList.contains('show')) {
+                    subsTextEl.classList.remove('show');
+                    subsTextEl.classList.add('hide');
+                    setTimeout(() => {
+                        if (!subsTextEl.classList.contains('show')) {
+                            subsTextEl.className = '';
+                            subsTextEl.style.textShadow = '';
+                        }
+                    }, 300);
+                } else {
+                    subsTextEl.className = '';
+                    subsTextEl.style.textShadow = '';
+                }
             }
+
+            function handleSeekReset(e) {
+                const audio = e.target;
+                if (audio !== activeAudio) return;
+                lastCheckTime = audio.currentTime - 0.5;
+                if (currentSubsKey !== null) {
+                    subsTextEl.classList.remove('show');
+                    subsTextEl.classList.add('hide');
+                    currentSubsKey = null;
+                    setTimeout(() => {
+                        if (!subsTextEl.classList.contains('show')) {
+                            subsTextEl.className = '';
+                            subsTextEl.style.textShadow = '';
+                        }
+                    }, 300);
+                }
+            }
+            audio1.addEventListener('seeking', handleSeekReset);
+            audio2.addEventListener('seeking', handleSeekReset);
+
+            function crossfadeToTrack(index) {
+                if (!musicList.length) {
+                    console.warn('[player] musicList пуст — трек не может быть запущен');
+                    return;
+                }
+                if (isCrossfading) {
+                    gsap.killTweensOf([activeAudio, nextAudio]);
+                    activeAudio.pause();
+                    activeAudio.currentTime = 0;
+                    nextAudio.pause();
+                    nextAudio.currentTime = 0;
+                    nextAudio.volume = 0;
+                    activeAudio.volume = targetVolume;
+                    isCrossfading = false;
+                }
+
+                isCrossfading = true;
+                currentTrackIndex = index;
+                const track = musicList[currentTrackIndex];
+
+                trackTitleEl.textContent = track.title;
+                trackArtistEl.textContent = track.artist;
+                changeBackground(track.bg);
+
+                stopSubsChecker();
+
+                nextAudio.src = track.audio;
+                nextAudio.volume = 0;
+                nextAudio.currentTime = 0;
+                nextAudio.play().catch(() => { });
+
+                const oldAudio = activeAudio;
+                const newAudio = nextAudio;
+                activeAudio = newAudio;
+                nextAudio = oldAudio;
+
+                isPlaying = true;
+                playPauseIcon.src = 'assets/pause.png';
+
+                startSubsChecker();
+
+                gsap.to(oldAudio, {
+                    volume: 0, duration: 1, ease: 'power1.inOut',
+                    onComplete: () => {
+                        oldAudio.pause();
+                        oldAudio.currentTime = 0;
+                    }
+                });
+
+                gsap.to(newAudio, {
+                    volume: targetVolume, duration: 1, ease: 'power1.inOut',
+                    onComplete: () => {
+                        isCrossfading = false;
+                    }
+                });
+            }
+
+            let pauseCooldown = false;
+
+            function togglePlayPause() {
+                if (activeAudio.paused) {
+                    activeAudio.play();
+                    isPlaying = true;
+                    playPauseIcon.src = 'assets/pause.png';
+                    pauseCooldown = true;
+                    setTimeout(() => { pauseCooldown = false; }, 1000);
+                    startSubsChecker();
+                } else {
+                    if (pauseCooldown && !debugVisible) return;
+
+                    activeAudio.pause();
+                    isPlaying = false;
+                    playPauseIcon.src = 'assets/play.png';
+                    stopSubsChecker();
+                }
+            }
+
+            function playNext() {
+                if (!musicList.length) return;
+                let nextIndex = currentTrackIndex + 1;
+                if (nextIndex >= musicList.length) nextIndex = 0;
+                crossfadeToTrack(nextIndex);
+            }
+
+            function playPrev() {
+                if (!musicList.length) return;
+                let prevIndex = currentTrackIndex - 1;
+                if (prevIndex < 0) prevIndex = musicList.length - 1;
+                crossfadeToTrack(prevIndex);
+            }
+
+            function handleAudioEnded(e) {
+                if (!isCrossfading && e.target === activeAudio) {
+                    playNext();
+                }
+            }
+            audio1.addEventListener('ended', handleAudioEnded);
+            audio2.addEventListener('ended', handleAudioEnded);
 
             moreMusicBtn.addEventListener('click', () => {
                 if (!musicAssetsLoaded || musicList.length === 0) {
@@ -2023,18 +2035,7 @@
             document.getElementById('debug-subs-checkbox').addEventListener('change', (e) => {
                 subsEnabled = !e.target.checked;
                 if (!subsEnabled) {
-                    if (subsTimer) {
-                        clearTimeout(subsTimer);
-                        subsTimer = null;
-                    }
-                    if (subsCheckInterval) {
-                        clearInterval(subsCheckInterval);
-                        subsCheckInterval = null;
-                    }
-                    subsTextEl.className = '';
-                    subsTextEl.textContent = '';
-                    currentSubsKey = null;
-                    subsAnimationLocked = false;
+                    stopSubsChecker();
                 } else if (isPlaying) {
                     startSubsChecker();
                 }
