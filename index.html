@@ -1087,6 +1087,13 @@
             border-color: rgba(255, 255, 255, 0.7);
         }
 
+        /* В догмат-плеере скрываем стандартные элементы навигации */
+        body.dogmat-active #back-btn,
+        body.dogmat-active #prev-btn,
+        body.dogmat-active #next-btn {
+            display: none !important;
+        }
+
         @media (max-width: 700px) {
             * {
                 display: none;
@@ -2367,6 +2374,7 @@
                 dogmatMode = false;
                 dogmatBtnWrapper.classList.remove('show');
                 dogmatRevealed = false;
+                document.body.classList.remove('dogmat-active');
                 setTimeout(() => {
                     gsap.to(profileBlock, { y: 0, duration: 0.8, ease: 'power2.inOut' });
                     gsap.to(bottomControls, {
@@ -2414,9 +2422,7 @@
                 dogmatBtnWrapper.classList.remove('show');
                 dogmatRevealed = false;
 
-                backBtn.style.display = 'none';
-                prevBtn.style.display = 'none';
-                nextBtn.style.display = 'none';
+                document.body.classList.add('dogmat-active');
 
                 gsap.to(profileBlock, { y: window.innerHeight * 1.5, duration: 0.8, ease: 'power2.inOut' });
                 gsap.to(bottomControls, { y: window.innerHeight * 1.5, duration: 0.8, ease: 'power2.inOut' });
@@ -2456,12 +2462,7 @@
 
                 dogmatOverlay.classList.add('open');
                 isMusicMode = false;
-
-                setTimeout(() => {
-                    backBtn.style.display = '';
-                    prevBtn.style.display = '';
-                    nextBtn.style.display = '';
-                }, 800);
+                document.body.classList.remove('dogmat-active');
             }
 
             preloadProfileAssets();
