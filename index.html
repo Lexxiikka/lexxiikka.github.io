@@ -940,6 +940,153 @@
             }
         }
 
+        /* ===== For Dogmat: секретная кнопка и выбор треков ===== */
+        .dogmat-btn-wrapper {
+            position: fixed;
+            right: 26px;
+            bottom: 26px;
+            z-index: 40;
+            padding: 2px;
+            background: linear-gradient(to right bottom, #2674df, #a61fd3);
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(24px) scale(0.9);
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .dogmat-btn-wrapper.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        #dogmat-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 18px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        #dogmat-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.05);
+        }
+
+        #dogmat-btn:active {
+            transform: scale(0.97);
+        }
+
+        #dogmat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 50;
+            background: #000;
+        }
+
+        #dogmat-overlay.open {
+            display: flex;
+        }
+
+        .dogmat-panel {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dogmat-panel:last-child {
+            border-right: none;
+        }
+
+        .dogmat-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(14px) brightness(0.3);
+            transform: scale(1.06);
+            transition: filter 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .dogmat-panel:hover .dogmat-bg {
+            filter: blur(0) brightness(1);
+            transform: scale(1.02);
+        }
+
+        .dogmat-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 26px;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 12px 22px;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+            opacity: 0.85;
+            transition: opacity 0.4s ease, background 0.4s ease;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .dogmat-panel:hover .dogmat-label {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        #dogmat-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 55;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+
+        #dogmat-close:hover {
+            transform: scale(1.12) rotate(90deg);
+            background: rgba(0, 0, 0, 0.85);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
         @media (max-width: 700px) {
             * {
                 display: none;
@@ -1062,6 +1209,13 @@
         </div>
     </div>
 
+    <div id="dogmat-btn-wrapper" class="dogmat-btn-wrapper">
+        <button id="dogmat-btn" title="For Dogmat">For Dogmat</button>
+    </div>
+    <div id="dogmat-overlay">
+        <button id="dogmat-close" title="Закрыть">✕</button>
+    </div>
+
     <div id="music-player-panel">
         <div class="player-left">
             <div class="track-info">
@@ -1125,6 +1279,7 @@
         let musicList = [];
         let names = [];
         let quotes = [];
+        let dogmatData = [];
 
         async function loadMusicConfig() {
             try {
@@ -1133,11 +1288,14 @@
                     throw new Error(`HTTP ${response.status} ${response.statusText}`);
                 }
                 const data = await response.json();
-                if (!Array.isArray(data)) {
-                    throw new Error('music_config.json должен содержать массив треков');
+                if (Array.isArray(data)) {
+                    musicList = data;
+                    dogmatData = [];
+                } else {
+                    musicList = Array.isArray(data.tracks) ? data.tracks : [];
+                    dogmatData = Array.isArray(data.dogmat) ? data.dogmat : [];
                 }
-                musicList = data;
-                console.log(`[music_config] Загружено треков: ${musicList.length}`);
+                console.log(`[music_config] Загружено треков: ${musicList.length}, dogmat: ${dogmatData.length}`);
             } catch (err) {
                 console.error('[music_config] Ошибка загрузки music_config.json:', err);
                 musicList = [];
@@ -1651,7 +1809,13 @@
                 const track = musicList[currentTrackIndex];
 
                 trackTitleEl.textContent = track.title;
-                trackArtistEl.textContent = track.artist;
+                if (track.artist) {
+                    trackArtistEl.textContent = track.artist;
+                    trackArtistEl.style.display = '';
+                } else {
+                    trackArtistEl.textContent = '';
+                    trackArtistEl.style.display = 'none';
+                }
                 changeBackground(track.bg);
 
                 stopSubsChecker();
@@ -1665,6 +1829,19 @@
                 const newAudio = nextAudio;
                 activeAudio = newAudio;
                 nextAudio = oldAudio;
+
+                if (track.extra_seek) {
+                    const seekTo = parseFloat(track.extra_seek);
+                    if (!isNaN(seekTo) && seekTo > 0) {
+                        const applySeek = () => {
+                            if (newAudio.readyState >= 1) {
+                                newAudio.currentTime = seekTo;
+                            }
+                        };
+                        newAudio.addEventListener('loadedmetadata', applySeek, { once: true });
+                        if (newAudio.readyState >= 1) applySeek();
+                    }
+                }
 
                 isPlaying = true;
                 playPauseIcon.src = 'assets/pause.png';
@@ -1723,7 +1900,11 @@
 
             function handleAudioEnded(e) {
                 if (!isCrossfading && e.target === activeAudio) {
-                    playNext();
+                    if (dogmatMode) {
+                        exitDogmatPlayerToSelection();
+                    } else {
+                        playNext();
+                    }
                 }
             }
             audio1.addEventListener('ended', handleAudioEnded);
@@ -1759,6 +1940,10 @@
             });
 
             backBtn.addEventListener('click', () => {
+                if (dogmatMode) {
+                    exitDogmatPlayerToSelection();
+                    return;
+                }
                 if (isCrossfading) {
                     gsap.killTweensOf([activeAudio, nextAudio]);
                     activeAudio.volume = targetVolume;
@@ -2040,6 +2225,244 @@
                     startSubsChecker();
                 }
             });
+
+            // ===== For Dogmat: секретный режим =====
+            const dogmatBtnWrapper = document.getElementById('dogmat-btn-wrapper');
+            const dogmatBtn = document.getElementById('dogmat-btn');
+            const dogmatOverlay = document.getElementById('dogmat-overlay');
+            const dogmatCloseBtn = document.getElementById('dogmat-close');
+            let dogmatRevealed = false;
+            let dogmatLoading = false;
+            let dogmatAssetsLoaded = false;
+            let dogmatMode = false;
+            let savedMusicList = [];
+            const DOGMAT_CORNER_X = 0.8;
+            const DOGMAT_CORNER_Y = 0.8;
+
+            window.addEventListener('mousemove', (e) => {
+                if (isMusicMode && !dogmatMode) return;
+                const inDogmatCorner = e.clientX >= window.innerWidth * DOGMAT_CORNER_X &&
+                    e.clientY >= window.innerHeight * DOGMAT_CORNER_Y;
+                if (inDogmatCorner) {
+                    if (!dogmatRevealed) {
+                        dogmatRevealed = true;
+                        dogmatBtnWrapper.classList.add('show');
+                    }
+                } else if (dogmatRevealed) {
+                    dogmatRevealed = false;
+                    dogmatBtnWrapper.classList.remove('show');
+                }
+            });
+
+            dogmatBtn.addEventListener('click', () => {
+                if (dogmatMode) {
+                    exitDogmatPlayerToSelection();
+                    return;
+                }
+                if (dogmatLoading) return;
+                bgMusicWasPlaying = !backgroundMusic.paused;
+                backgroundMusic.pause();
+                if (!dogmatData.length) {
+                    dogmatBtn.textContent = 'Нет данных в конфиге';
+                    setTimeout(() => { dogmatBtn.textContent = 'For Dogmat'; }, 2500);
+                    return;
+                }
+                if (dogmatAssetsLoaded) {
+                    buildDogmatPanels();
+                    dogmatOverlay.classList.add('open');
+                    return;
+                }
+                dogmatLoading = true;
+                dogmatBtn.textContent = 'Загрузка 0%';
+                preloadDogmatAssets();
+            });
+
+            function preloadDogmatAssets() {
+                const assets = [];
+                dogmatData.forEach(d => {
+                    if (d.image) assets.push(d.image);
+                    if (d.video) assets.push(d.video);
+                    if (d.audio) assets.push(d.audio);
+                });
+
+                if (!assets.length) {
+                    dogmatAssetsLoaded = true;
+                    dogmatLoading = false;
+                    dogmatBtn.textContent = 'For Dogmat';
+                    buildDogmatPanels();
+                    dogmatOverlay.classList.add('open');
+                    return;
+                }
+
+                const total = assets.length;
+                let loaded = 0;
+
+                const onLoaded = () => {
+                    loaded++;
+                    const pct = Math.min(100, Math.floor((loaded / total) * 100));
+                    dogmatBtn.textContent = `Загрузка ${pct}%`;
+                    if (loaded >= total) {
+                        dogmatAssetsLoaded = true;
+                        dogmatLoading = false;
+                        dogmatBtn.textContent = 'For Dogmat';
+                        const container = document.getElementById('dogmat-preload-container');
+                        if (container) container.remove();
+                        buildDogmatPanels();
+                        dogmatOverlay.classList.add('open');
+                    }
+                };
+
+                let container = document.getElementById('dogmat-preload-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.style.display = 'none';
+                    container.id = 'dogmat-preload-container';
+                    document.body.appendChild(container);
+                }
+
+                assets.forEach(src => {
+                    const lower = src.toLowerCase();
+                    if (lower.endsWith('.mp4')) {
+                        const video = document.createElement('video');
+                        video.preload = 'auto';
+                        video.muted = true;
+                        video.src = src;
+                        video.onloadeddata = onLoaded;
+                        video.onerror = onLoaded;
+                        container.appendChild(video);
+                    } else if (lower.endsWith('.mp3')) {
+                        const audio = document.createElement('audio');
+                        audio.preload = 'auto';
+                        audio.src = src;
+                        audio.onloadeddata = onLoaded;
+                        audio.onerror = onLoaded;
+                        container.appendChild(audio);
+                    } else {
+                        const img = new Image();
+                        img.onload = onLoaded;
+                        img.onerror = onLoaded;
+                        img.src = src;
+                    }
+                });
+            }
+
+            function buildDogmatPanels() {
+                dogmatOverlay.querySelectorAll('.dogmat-panel').forEach(el => el.remove());
+                dogmatData.forEach((d, i) => {
+                    const panel = document.createElement('div');
+                    panel.className = 'dogmat-panel';
+
+                    const bg = document.createElement('div');
+                    bg.className = 'dogmat-bg';
+                    if (d.image) bg.style.backgroundImage = `url('${d.image}')`;
+                    panel.appendChild(bg);
+
+                    panel.addEventListener('click', () => openDogmatTrack(i));
+                    dogmatOverlay.appendChild(panel);
+                });
+            }
+
+            dogmatCloseBtn.addEventListener('click', () => {
+                dogmatOverlay.classList.remove('open');
+                dogmatMode = false;
+                dogmatBtnWrapper.classList.remove('show');
+                dogmatRevealed = false;
+                setTimeout(() => {
+                    gsap.to(profileBlock, { y: 0, duration: 0.8, ease: 'power2.inOut' });
+                    gsap.to(bottomControls, {
+                        y: 0, duration: 0.8, ease: 'power2.inOut',
+                        onComplete: () => {
+                            isMusicMode = false;
+                            if (bgMusicWasPlaying) {
+                                backgroundMusic.currentTime = 0;
+                                backgroundMusic.play().catch(() => { });
+                            }
+                        }
+                    });
+                }, 400);
+            });
+
+            function openDogmatTrack(index) {
+                const entry = dogmatData[index];
+                if (!entry || !entry.audio) {
+                    dogmatBtn.textContent = 'У трека нет аудио';
+                    setTimeout(() => { dogmatBtn.textContent = 'For Dogmat'; }, 2500);
+                    return;
+                }
+                if (isCrossfading) {
+                    gsap.killTweensOf([activeAudio, nextAudio]);
+                    activeAudio.volume = targetVolume;
+                    nextAudio.pause(); nextAudio.currentTime = 0; nextAudio.volume = 0;
+                    isCrossfading = false;
+                }
+
+                backgroundMusic.pause();
+                isMusicMode = true;
+                dogmatMode = true;
+
+                savedMusicList = musicList;
+                musicList = dogmatData.map(d => ({
+                    title: d.title || 'Без названия',
+                    artist: d.artist || '',
+                    audio: d.audio,
+                    bg: d.video || 'assets/background_main.mp4',
+                    subtitles: null,
+                    extra_seek: d.extra_seek || null
+                }));
+
+                dogmatOverlay.classList.remove('open');
+                dogmatBtnWrapper.classList.remove('show');
+                dogmatRevealed = false;
+
+                backBtn.style.display = 'none';
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+
+                gsap.to(profileBlock, { y: window.innerHeight * 1.5, duration: 0.8, ease: 'power2.inOut' });
+                gsap.to(bottomControls, { y: window.innerHeight * 1.5, duration: 0.8, ease: 'power2.inOut' });
+
+                setTimeout(() => {
+                    musicPlayerPanel.classList.add('slide-up');
+                    backBtn.classList.add('slide-up');
+                    crossfadeToTrack(index);
+                }, 800);
+            }
+
+            function exitDogmatPlayerToSelection() {
+                dogmatMode = false;
+                if (isCrossfading) {
+                    gsap.killTweensOf([activeAudio, nextAudio]);
+                    activeAudio.volume = targetVolume;
+                    nextAudio.pause(); nextAudio.currentTime = 0; nextAudio.volume = 0;
+                    isCrossfading = false;
+                }
+                activeAudio.pause(); activeAudio.currentTime = 0;
+                isPlaying = false;
+                playPauseIcon.src = 'assets/play.png';
+                stopSubsChecker();
+
+                musicList = savedMusicList;
+                savedMusicList = [];
+                musicPlayerInitialized = false;
+                currentTrackIndex = 0;
+
+                currentBgSrc = null;
+                changeBackground('assets/background_main.mp4');
+
+                musicPlayerPanel.classList.remove('slide-up');
+                backBtn.classList.remove('slide-up');
+                dogmatBtnWrapper.classList.remove('show');
+                dogmatRevealed = false;
+
+                dogmatOverlay.classList.add('open');
+                isMusicMode = false;
+
+                setTimeout(() => {
+                    backBtn.style.display = '';
+                    prevBtn.style.display = '';
+                    nextBtn.style.display = '';
+                }, 800);
+            }
 
             preloadProfileAssets();
         });
