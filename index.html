@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Имени шизы Лексики</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Underdog&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Underdog&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Underdog', 'Calibri';
+            font-family: 'Underdog', Calibri, system-ui, sans-serif;
         }
 
         .home-theme #profile-block {
@@ -27,6 +29,7 @@
         }
 
         body {
+            font-synthesis: none;
             background-color: #000;
             color: #fff;
             overflow: hidden;
@@ -940,6 +943,104 @@
             }
         }
 
+        #error-toasts {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: min(520px, 90vw);
+            pointer-events: none;
+        }
+
+        .error-toast {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(40, 0, 10, 0.92);
+            border: 1px solid #ff4d6d;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.4;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.35);
+            pointer-events: auto;
+            animation: toastIn 0.3s ease-out;
+        }
+
+        .error-toast.out {
+            animation: toastOut 0.3s ease-in forwards;
+        }
+
+        .error-toast span {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .error-toast button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .error-toast button:hover {
+            opacity: 1;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        @keyframes toastOut {
+            to { opacity: 0; transform: translateY(-15px); }
+        }
+
+        #play-pause-btn { position: relative; }
+
+        .load-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 72px;
+            height: 72px;
+            margin: -36px 0 0 -36px;
+            transform: rotate(-90deg);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s;
+            pointer-events: none;
+        }
+
+        .load-ring.visible { opacity: 1; visibility: visible; }
+        .load-ring circle { fill: none; stroke-width: 4; }
+        .load-ring .ring-bg { stroke: rgba(255, 255, 255, 0.2); }
+
+        .load-ring .ring-fg {
+            stroke: #a61fd3;
+            stroke-linecap: round;
+            stroke-dasharray: 194.78;
+            stroke-dashoffset: 194.78;
+            transition: stroke-dashoffset 0.2s linear;
+        }
+
+        .load-ring.indeterminate { animation: ringSpin 1s linear infinite; }
+        .load-ring.indeterminate .ring-fg { stroke-dashoffset: 146; transition: none; }
+
+        @keyframes ringSpin {
+            from { transform: rotate(-90deg); }
+            to { transform: rotate(270deg); }
+        }
+
         @media (max-width: 700px) {
             * {
                 display: none;
@@ -949,8 +1050,9 @@
 </head>
 
 <body class="home-theme">
+    <div id="error-toasts"></div>
     <div id="start-screen">
-        <div id="start-text">Идет подгрузка контента страницы, 0%</div>
+        <div id="start-text">Идет подгрузка контента страницы 0%</div>
     </div>
     <div class="container">
         <div id="bg-container">
@@ -995,8 +1097,8 @@
                                         <span class="tooltip">Самый важный</span>
                                     </div>
                                     <div class="badge-container">
-                                        <a href="https://discord.gg/pMxY6cSTvw" target="_blank">
-                                            <img src="assets/aal.png" alt="King" class="badge">
+                                        <a href="https://discord.gg/pMxY6cSTvw" target="_blank" rel="noopener noreferrer">
+                                            <img src="assets/aal.png" alt="AAL" class="badge">
                                         </a>
                                         <span class="tooltip">Основатель AAL</span>
                                     </div>
@@ -1010,21 +1112,21 @@
             <div class="bio-separator"></div>
             <div class="profile-footer">
                 <div class="social-links">
-                    <a href="https://t.me/lexxikka" target="_blank"><img src="assets/telegram.png" alt="Telegram"
+                    <a href="https://t.me/lexxikka" target="_blank" rel="noopener noreferrer"><img src="assets/telegram.png" alt="Telegram"
                             class="social-icon"></a>
-                    <a href="https://t.me/lexxikka_g" target="_blank"><img src="assets/telegram_group.png"
+                    <a href="https://t.me/lexxikka_g" target="_blank" rel="noopener noreferrer"><img src="assets/telegram_group.png"
                             alt="Telegram" class="social-icon"></a>
-                    <a href="https://discord.gg/pMxY6cSTvw" target="_blank"><img src="assets/discord.png" alt="Discord"
+                    <a href="https://discord.gg/pMxY6cSTvw" target="_blank" rel="noopener noreferrer"><img src="assets/discord.png" alt="Discord"
                             class="social-icon"></a>
-                    <a href="https://www.youtube.com/@AbsoluteAlonedLex" target="_blank"><img src="assets/youtube.png"
+                    <a href="https://www.youtube.com/@AbsoluteAlonedLex" target="_blank" rel="noopener noreferrer"><img src="assets/youtube.png"
                             alt="YouTube" class="social-icon"></a>
-                    <a href="http://steamcommunity.com/profiles/76561198003466378" target="_blank"><img
+                    <a href="https://steamcommunity.com/profiles/76561198003466378" target="_blank" rel="noopener noreferrer"><img
                             src="assets/steam.png" alt="Steam" class="social-icon"></a>
-                    <a href="https://discord.gg/wFmcwHCmnq" target="_blank"><img src="assets/c44.png" alt="ITD"
+                    <a href="https://discord.gg/wFmcwHCmnq" target="_blank" rel="noopener noreferrer"><img src="assets/c44.png" alt="Discord C44"
                             class="social-icon round"></a>
-                    <a href="https://xn--d1ah4a.com/@lexxikka" target="_blank"><img src="assets/itd.png" alt="ITD"
+                    <a href="https://xn--d1ah4a.com/@lexxikka" target="_blank" rel="noopener noreferrer"><img src="assets/itd.png" alt="ITD"
                             class="social-icon round"></a>
-                    <a href="https://lexxiikka.github.io/advert/" target="_blank"><img src="assets/blog.png"
+                    <a href="https://lexxiikka.github.io/advert/" target="_blank" rel="noopener noreferrer"><img src="assets/blog.png"
                             alt="advert" class="social-icon"></a>
                 </div>
                 <div class="visitor-counter">
@@ -1080,6 +1182,7 @@
                 </button>
                 <button id="play-pause-btn" title="Пауза">
                     <img id="play-pause-icon" src="assets/pause.png" alt="Pause">
+                    <svg id="load-ring" class="load-ring" viewBox="0 0 70 70" aria-hidden="true"><circle class="ring-bg" cx="35" cy="35" r="31"></circle><circle class="ring-fg" cx="35" cy="35" r="31"></circle></svg>
                 </button>
                 <button id="next-btn" title="Следующий трек">
                     <img src="assets/next.png" alt="Next">
@@ -1114,9 +1217,7 @@
         <div id="subtitles-text"></div>
     </div>
 
-    <audio id="background-music" loop>
-        <source type="audio/mp3">
-    </audio>
+    <audio id="background-music" loop preload="auto"></audio>
     <audio id="music-player-1" preload="auto"></audio>
     <audio id="music-player-2" preload="auto"></audio>
 
@@ -1125,6 +1226,86 @@
         let musicList = [];
         let names = [];
         let quotes = [];
+        const DEBUG_ENABLED = new URLSearchParams(location.search).has('debug');
+        const assetCache = new Map();
+        const failedAssets = [];
+        const MIME = { mp4: 'video/mp4', mp3: 'audio/mpeg' };
+        const cached = (src) => assetCache.get(src) ?? src;
+
+        function showError(message) {
+            console.error(message);
+            const box = document.getElementById('error-toasts');
+            if (!box) return;
+            while (box.children.length >= 4) box.firstChild.remove();
+            const el = document.createElement('div');
+            el.className = 'error-toast';
+            el.setAttribute('role', 'alert');
+            const text = document.createElement('span');
+            text.textContent = '\u26A0 ' + message;
+            const close = document.createElement('button');
+            close.textContent = '\u00D7';
+            close.setAttribute('aria-label', 'Закрыть');
+            const dismiss = () => { el.classList.add('out'); setTimeout(() => el.remove(), 300); };
+            close.addEventListener('click', dismiss);
+            setTimeout(dismiss, 12000);
+            el.append(text, close);
+            box.appendChild(el);
+        }
+
+        function reportAsset(src, reason) {
+            if (failedAssets.includes(src)) return;
+            failedAssets.push(src);
+            showError(`Не удалось загрузить файл: ${src}${reason ? ' (' + reason + ')' : ''}`);
+        }
+
+        async function fetchToBlobUrl(src, onProgress = () => { }) {
+            const res = await fetch(src);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const total = +res.headers.get('Content-Length') || 0;
+            const reader = res.body.getReader();
+            const chunks = [];
+            let loaded = 0;
+            for (; ;) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                loaded += value.length;
+                if (total) onProgress(Math.min(loaded / total, 0.99));
+            }
+            const ext = src.split('.').pop().toLowerCase();
+            const blob = new Blob(chunks, { type: MIME[ext] || res.headers.get('Content-Type') || '' });
+            const url = URL.createObjectURL(blob);
+            assetCache.set(src, url);
+            return url;
+        }
+
+        const inflight = new Map();
+        function loadAsset(src, onProgress = () => { }) {
+            if (assetCache.has(src)) { onProgress(1); return Promise.resolve(assetCache.get(src)); }
+            let job = inflight.get(src);
+            if (!job) {
+                job = { listeners: new Set(), last: 0 };
+                job.promise = fetchToBlobUrl(src, (p) => { job.last = p; job.listeners.forEach(f => f(p)); })
+                    .finally(() => inflight.delete(src));
+                inflight.set(src, job);
+            }
+            job.listeners.add(onProgress);
+            onProgress(job.last);
+            return job.promise;
+        }
+
+        function decodeImage(src) {
+            const img = new Image();
+            img.src = src;
+            return img.decode().then(() => true, () => false);
+        }
+
+        function watchMedia(el, src) {
+            const url = el.getAttribute('src');
+            el.addEventListener('error', () => {
+                if (el.getAttribute('src') === url) reportAsset(src, 'ошибка воспроизведения');
+            });
+        }
 
         async function loadMusicConfig() {
             try {
@@ -1133,13 +1314,15 @@
                     throw new Error(`HTTP ${response.status} ${response.statusText}`);
                 }
                 const data = await response.json();
-                if (!Array.isArray(data)) {
-                    throw new Error('music_config.json должен содержать массив треков');
+                const list = Array.isArray(data) ? data : data && data.tracks;
+                if (!Array.isArray(list)) {
+                    throw new Error('в music_config.json нет массива треков (ожидается [...] или {"tracks": [...]})');
                 }
-                musicList = data;
+                musicList = list;
                 console.log(`[music_config] Загружено треков: ${musicList.length}`);
             } catch (err) {
                 console.error('[music_config] Ошибка загрузки music_config.json:', err);
+                showError('Не удалось загрузить music_config.json: ' + err.message);
                 musicList = [];
             }
         }
@@ -1156,159 +1339,70 @@
                 console.log(`[text_config] Имён: ${names.length}, цитат: ${quotes.length}`);
             } catch (err) {
                 console.error('[text_config] Ошибка загрузки text_config.json:', err);
+                showError('Не удалось загрузить text_config.json. Тексты заменены на запасные.');
                 names = ["Lexxikka"];
                 quotes = ["..."];
             }
         }
 
         let profileAssetsLoaded = false;
-        let musicAssetsLoaded = false;
-        let totalProfileAssets = 0;
-        let loadedProfileAssets = 0;
-        let totalMusicAssets = 0;
-        let loadedMusicAssets = 0;
 
         function initMedia() {
-            const backgroundMusic = document.getElementById('background-music');
-            if (!backgroundMusic) {
-                console.error("Media elements not found");
-                return;
+            const bgm = document.getElementById('background-music');
+            if (!bgm) { console.error("Media elements not found"); return; }
+            bgm.volume = 0.3;
+            if (typeof gsap === 'undefined') {
+                showError('Не удалось загрузить библиотеку анимаций (GSAP). Обновите страницу.');
             }
-            if (!backgroundMusic.src || backgroundMusic.src === window.location.href) {
-                backgroundMusic.src = 'assets/music_main.mp3';
-            }
-            backgroundMusic.volume = 0.3;
         }
 
-        function trackProfileAssetLoad() {
-            loadedProfileAssets++;
-            const loadingPercent = Math.floor((loadedProfileAssets / totalProfileAssets) * 100);
+        async function preloadPlayerInBackground() {
+            for (const track of musicList) {
+                for (const src of [track.audio, track.bg]) {
+                    if (!src || assetCache.has(src)) continue;
+                    try { await loadAsset(src); } catch (err) { reportAsset(src, err.message); }
+                }
+            }
+        }
+
+        async function preloadProfileAssets() {
             const startText = document.getElementById('start-text');
-            if (startText && !profileAssetsLoaded) {
-                startText.textContent = `Идет подгрузка контента страницы ${loadingPercent}%`;
-            }
-            if (loadedProfileAssets >= totalProfileAssets) {
-                profileAssetsLoaded = true;
-                startText.textContent = 'Ну же, один клик во имя повелителя. . .';
-
-                const preloadContainer = document.getElementById('preload-container');
-                if (preloadContainer) {
-                    preloadContainer.querySelectorAll('video, audio').forEach(el => {
-                        el.removeAttribute('src');
-                        el.load();
-                    });
-                    preloadContainer.remove();
-                }
-
-                preloadMusicAssets();
-            }
-        }
-
-        function trackMusicAssetLoad() {
-            loadedMusicAssets++;
-            if (loadedMusicAssets >= totalMusicAssets) {
-                musicAssetsLoaded = true;
-                const tooltip = document.getElementById('music-loading-tooltip');
-                if (tooltip) {
-                    tooltip.classList.remove('visible');
-                    tooltip.classList.add('hidden');
-                }
-            }
-        }
-
-        function preloadProfileAssets() {
-            const profileAssets = [
-                'assets/music_main.mp3',
-                'assets/profile.png',
-                'assets/developer.png',
-                'assets/1c.png',
-                'assets/py.png',
-                'assets/js.png',
-                'assets/owner.gif',
-                'assets/aal.png',
-                'assets/staff.gif',
-                'assets/telegram.png',
-                'assets/telegram_group.png',
-                'assets/discord.png',
-                'assets/youtube.png',
-                'assets/steam.png',
-                'assets/itd.png',
-                'assets/blog.png',
-                'assets/icon.png'
+            const first = musicList[0];
+            const images = [
+                'assets/profile.png', 'assets/developer.png', 'assets/1c.png', 'assets/py.png',
+                'assets/js.png', 'assets/owner.gif', 'assets/aal.png', 'assets/staff.gif',
+                'assets/telegram.png', 'assets/telegram_group.png', 'assets/discord.png',
+                'assets/youtube.png', 'assets/steam.png', 'assets/c44.png', 'assets/itd.png',
+                'assets/blog.png', 'assets/icon.png', 'assets/player.png', 'assets/return.png',
+                'assets/play.png', 'assets/pause.png', 'assets/next.png', 'assets/voice.png'
             ];
-            totalProfileAssets = profileAssets.length + 1;
-            const preloadContainer = document.createElement('div');
-            preloadContainer.style.display = 'none';
-            preloadContainer.id = 'preload-container';
-            document.body.appendChild(preloadContainer);
-
-            profileAssets.forEach(src => {
-                if (src.endsWith('.mp4')) {
-                    const video = document.createElement('video');
-                    video.preload = 'auto';
-                    video.muted = true;
-                    video.src = src;
-                    video.onloadeddata = trackProfileAssetLoad;
-                    video.onerror = trackProfileAssetLoad;
-                    preloadContainer.appendChild(video);
-                } else if (src.endsWith('.mp3')) {
-                    const audio = document.createElement('audio');
-                    audio.preload = 'auto';
-                    audio.src = src;
-                    audio.onloadeddata = trackProfileAssetLoad;
-                    audio.onerror = trackProfileAssetLoad;
-                    preloadContainer.appendChild(audio);
-                } else {
-                    const img = new Image(); img.src = src;
-                    img.onload = trackProfileAssetLoad; img.onerror = trackProfileAssetLoad;
-                }
-            });
-        }
-
-        function preloadMusicAssets() {
-            const musicAssets = [
-                'assets/player.png',
-                'assets/return.png',
-                'assets/play.png',
-                'assets/pause.png',
-                'assets/next.png',
-                'assets/voice.png',
+            const media = [
+                'assets/background_main.mp4', 'assets/music_main.mp3',
+                ...(first ? [first.audio, first.bg].filter(Boolean) : [])
             ];
-            musicList.forEach(track => {
-                if (track.audio) musicAssets.push(track.audio);
-                if (track.bg) musicAssets.push(track.bg);
-            });
-            totalMusicAssets = musicAssets.length;
+            const jobs = [
+                (set) => document.fonts.load('16px Underdog').catch(() => { }).then(() => set(1)),
+                ...images.map(src => (set) => decodeImage(src).then(ok => { if (!ok) reportAsset(src); set(1); })),
+                ...media.map(src => (set) => fetchToBlobUrl(src, set)
+                    .catch(err => reportAsset(src, err.message)).then(() => set(1)))
+            ];
+            const progress = new Array(jobs.length).fill(0);
+            const render = () => {
+                const pct = Math.floor(progress.reduce((a, b) => a + b, 0) / jobs.length * 100);
+                startText.textContent = `Идет подгрузка контента страницы ${pct}%`;
+            };
+            await Promise.all(jobs.map((job, i) => job(v => { progress[i] = v; render(); })));
 
-            let preloadContainer = document.getElementById('preload-container');
-            if (!preloadContainer) {
-                preloadContainer = document.createElement('div');
-                preloadContainer.style.display = 'none';
-                preloadContainer.id = 'preload-container';
-                document.body.appendChild(preloadContainer);
-            }
+            const bg1 = document.getElementById('bg-video-1');
+            const bgm = document.getElementById('background-music');
+            bg1.src = cached('assets/background_main.mp4');
+            watchMedia(bg1, 'assets/background_main.mp4');
+            bg1.play().catch(() => { });
+            bgm.src = cached('assets/music_main.mp3');
+            watchMedia(bgm, 'assets/music_main.mp3');
 
-            musicAssets.forEach(src => {
-                if (src.endsWith('.mp4')) {
-                    const video = document.createElement('video');
-                    video.preload = 'auto';
-                    video.muted = true;
-                    video.src = src;
-                    video.onloadeddata = trackMusicAssetLoad;
-                    video.onerror = trackMusicAssetLoad;
-                    preloadContainer.appendChild(video);
-                } else if (src.endsWith('.mp3')) {
-                    const audio = document.createElement('audio');
-                    audio.preload = 'auto';
-                    audio.src = src;
-                    audio.onloadeddata = trackMusicAssetLoad;
-                    audio.onerror = trackMusicAssetLoad;
-                    preloadContainer.appendChild(audio);
-                } else {
-                    const img = new Image(); img.src = src;
-                    img.onload = trackMusicAssetLoad; img.onerror = trackMusicAssetLoad;
-                }
-            });
+            profileAssetsLoaded = true;
+            preloadPlayerInBackground();
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -1347,17 +1441,6 @@
             let bgTransitionTimer = null;
             let bgTransitionId = 0;
 
-            let mainBgTracked = false;
-            const trackMainBg = () => {
-                if (mainBgTracked) return;
-                mainBgTracked = true;
-                trackProfileAssetLoad();
-            };
-            bg1.addEventListener('loadeddata', trackMainBg, { once: true });
-            bg1.addEventListener('error', trackMainBg, { once: true });
-
-            bg1.src = currentBgSrc;
-            bg1.play().catch(() => { });
 
             function forceCompleteBgTransition() {
                 nextBg.style.transition = 'none';
@@ -1399,7 +1482,7 @@
                 nextBg.pause();
                 nextBg.removeAttribute('src');
                 nextBg.load();
-                nextBg.src = videoSrc;
+                nextBg.src = cached(videoSrc);
                 nextBg.load();
 
                 let started = false;
@@ -1452,7 +1535,7 @@
                     clearTimeout(fallbackTimer);
                     nextBg.removeEventListener('canplay', onCanPlay);
                     nextBg.removeEventListener('error', onError);
-                    console.error("Background load failed:", videoSrc);
+                    reportAsset(videoSrc, 'не удалось загрузить фон');
                     started = true;
                     bgTransitionTimer = null;
                 };
@@ -1468,12 +1551,18 @@
             let targetVolume = 0.3;
             let isCrossfading = false;
             let currentTrackIndex = 0;
+            let targetIndex = 0;
+            let loadToken = 0;
+            let loadingTrack = false;
             let isPlaying = false;
             let isMusicMode = false;
             let bgMusicWasPlaying = false;
             let musicPlayerInitialized = false;
 
             audio1.volume = 0; audio2.volume = 0;
+            [audio1, audio2].forEach(a => a.addEventListener('error', () => {
+                if (a.getAttribute('src')) reportAsset(a.dataset.orig || a.getAttribute('src'), 'ошибка воспроизведения');
+            }));
 
             const subsTextEl = document.getElementById('subtitles-text');
             const SUBS_DISPLAY_DURATION = 4;
@@ -1656,7 +1745,8 @@
 
                 stopSubsChecker();
 
-                nextAudio.src = track.audio;
+                nextAudio.dataset.orig = track.audio;
+                nextAudio.src = cached(track.audio);
                 nextAudio.volume = 0;
                 nextAudio.currentTime = 0;
                 nextAudio.play().catch(() => { });
@@ -1707,22 +1797,54 @@
                 }
             }
 
+            const loadRing = document.getElementById('load-ring');
+            const ringFg = loadRing.querySelector('.ring-fg');
+            const RING_C = 194.78;
+            function showLoadRing() { loadRing.classList.add('visible', 'indeterminate'); ringFg.style.strokeDashoffset = ''; }
+            function setLoadRing(p) {
+                if (p <= 0) return;
+                loadRing.classList.remove('indeterminate');
+                ringFg.style.strokeDashoffset = RING_C * (1 - Math.min(p, 1));
+            }
+            function hideLoadRing() { loadRing.classList.remove('visible', 'indeterminate'); }
+
+            async function switchToTrack(index) {
+                if (!musicList.length) return;
+                targetIndex = index;
+                const myToken = ++loadToken;
+                loadingTrack = false;
+                hideLoadRing();
+                const track = musicList[index];
+                const needed = [track.audio, track.bg].filter(Boolean);
+                if (!needed.every(src => assetCache.has(src))) {
+                    loadingTrack = true;
+                    trackTitleEl.textContent = track.title;
+                    trackArtistEl.textContent = track.artist;
+                    showLoadRing();
+                    const prog = new Array(needed.length).fill(0);
+                    await Promise.all(needed.map((src, i) =>
+                        loadAsset(src, (p) => {
+                            if (myToken !== loadToken) return;
+                            prog[i] = p;
+                            setLoadRing(prog.reduce((a, b) => a + b, 0) / needed.length);
+                        }).catch(err => reportAsset(src, err.message))));
+                    if (myToken !== loadToken) return;
+                    loadingTrack = false;
+                    hideLoadRing();
+                }
+                crossfadeToTrack(index);
+            }
             function playNext() {
                 if (!musicList.length) return;
-                let nextIndex = currentTrackIndex + 1;
-                if (nextIndex >= musicList.length) nextIndex = 0;
-                crossfadeToTrack(nextIndex);
+                switchToTrack((targetIndex + 1) % musicList.length);
             }
-
             function playPrev() {
                 if (!musicList.length) return;
-                let prevIndex = currentTrackIndex - 1;
-                if (prevIndex < 0) prevIndex = musicList.length - 1;
-                crossfadeToTrack(prevIndex);
+                switchToTrack((targetIndex - 1 + musicList.length) % musicList.length);
             }
 
             function handleAudioEnded(e) {
-                if (!isCrossfading && e.target === activeAudio) {
+                if (!isCrossfading && !loadingTrack && e.target === activeAudio) {
                     playNext();
                 }
             }
@@ -1730,7 +1852,8 @@
             audio2.addEventListener('ended', handleAudioEnded);
 
             moreMusicBtn.addEventListener('click', () => {
-                if (!musicAssetsLoaded || musicList.length === 0) {
+                if (musicList.length === 0) {
+                    musicLoadingTooltip.textContent = 'Список треков недоступен';
                     musicLoadingTooltip.classList.add('visible');
                     setTimeout(() => {
                         musicLoadingTooltip.classList.remove('visible');
@@ -1750,7 +1873,7 @@
                     backBtn.classList.add('slide-up');
 
                     if (!musicPlayerInitialized) {
-                        crossfadeToTrack(0);
+                        switchToTrack(0);
                         musicPlayerInitialized = true;
                     } else if (!isPlaying) {
                         togglePlayPause();
@@ -1771,6 +1894,7 @@
                 stopSubsChecker();
 
                 musicPlayerInitialized = false;
+                loadToken++; loadingTrack = false; targetIndex = 0; hideLoadRing();
                 currentBgSrc = null;
                 changeBackground('assets/background_main.mp4');
 
@@ -1995,7 +2119,7 @@
             }
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'F3' || (e.key === 'd' && e.ctrlKey && e.shiftKey)) {
+                if (DEBUG_ENABLED && (e.code === 'F3' || (e.code === 'KeyD' && e.ctrlKey && e.shiftKey))) {
                     e.preventDefault();
                     if (debugVisible) {
                         hideDebugTime();
