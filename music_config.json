@@ -1,5 +1,4 @@
-{
-  "tracks": [
+[
   {
     "title": "Хомо Саспенс",
     "artist": "DEEP-EX-SENSE",
@@ -357,26 +356,4 @@
       "167.7": "Какая бескрайняя власть!"
     }
   }
-  ],
-  "dogmat": [
-    {
-      "title": "Увидимся снова",
-      "image": "dogmat/img_1.png",
-      "video": "dogmat/vid_1.mp4",
-      "audio": "dogmat/aud_1.mp3"
-    },
-    {
-      "title": "Просто забей",
-      "image": "dogmat/img_2.png",
-      "video": "sounds/background__Стинт__Друзья.mp4",
-      "audio": "dogmat/aud_2.mp3"
-    },
-    {
-      "title": "&",
-      "image": "dogmat/img_3.png",
-      "video": "sounds/background__WarVoid__Человек_бензопила.mp4",
-      "audio": "sounds/music__WarVoid__Человек_бензопила.mp3",
-      "extra_seek": 63.3
-    }
-  ]
-}
+]
