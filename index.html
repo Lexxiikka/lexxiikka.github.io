@@ -1228,11 +1228,22 @@
         let musicList = [];
         let names = [];
         let quotes = [];
+        let mainSoundMultiplier = 1;
         const DEBUG_ENABLED = new URLSearchParams(location.search).has('debug');
         const assetCache = new Map();
         const failedAssets = [];
         const MIME = { mp4: 'video/mp4', mp3: 'audio/mpeg' };
         const cached = (src) => assetCache.get(src) ?? src;
+
+        function parseMultiplier(value) {
+            if (value === null || value === undefined || value === '') return 1;
+            const num = Number(value);
+            return Number.isFinite(num) && num >= 0 ? num : 1;
+        }
+
+        function clampVolume(value) {
+            return Math.min(1, Math.max(0, value));
+        }
 
         function showError(message) {
             console.error(message);
@@ -1338,12 +1349,14 @@
                 const data = await response.json();
                 names = Array.isArray(data.names) ? data.names : [];
                 quotes = Array.isArray(data.quotes) ? data.quotes : [];
-                console.log(`[text_config] Имён: ${names.length}, цитат: ${quotes.length}`);
+                mainSoundMultiplier = parseMultiplier(data.sound_multiplier);
+                console.log(`[text_config] Имён: ${names.length}, цитат: ${quotes.length}, множитель звука: ${mainSoundMultiplier}`);
             } catch (err) {
                 console.error('[text_config] Ошибка загрузки text_config.json:', err);
                 showError('Не удалось загрузить text_config.json. Тексты заменены на запасные.');
                 names = ["Lexxikka"];
                 quotes = ["..."];
+                mainSoundMultiplier = 1;
             }
         }
 
@@ -1351,8 +1364,10 @@
 
         function initMedia() {
             const bgm = document.getElementById('background-music');
+            const slider = document.getElementById('volume-slider');
             if (!bgm) { console.error("Media elements not found"); return; }
-            bgm.volume = 0.3;
+            const baseVolume = slider ? parseFloat(slider.value) : 0.3;
+            bgm.volume = clampVolume(baseVolume * mainSoundMultiplier);
             if (typeof gsap === 'undefined') {
                 showError('Не удалось загрузить библиотеку анимаций (GSAP). Обновите страницу.');
             }
@@ -1550,7 +1565,7 @@
             const audio2 = document.getElementById('music-player-2');
             let activeAudio = audio1;
             let nextAudio = audio2;
-            let targetVolume = 0.3;
+            let targetVolume = Number.isFinite(parseFloat(playerVolumeSlider.value)) ? parseFloat(playerVolumeSlider.value) : 0.3;
             let isCrossfading = false;
             let currentTrackIndex = 0;
             let targetIndex = 0;
@@ -1560,6 +1575,11 @@
             let isMusicMode = false;
             let bgMusicWasPlaying = false;
             let musicPlayerInitialized = false;
+
+            function getEffectiveTrackVolume(track = musicList[currentTrackIndex]) {
+                const multiplier = track ? parseMultiplier(track.sound_multiplier) : 1;
+                return clampVolume(targetVolume * multiplier);
+            }
 
             audio1.volume = 0; audio2.volume = 0;
             [audio1, audio2].forEach(a => a.addEventListener('error', () => {
@@ -1733,7 +1753,7 @@
                     nextAudio.pause();
                     nextAudio.currentTime = 0;
                     nextAudio.volume = 0;
-                    activeAudio.volume = targetVolume;
+                    activeAudio.volume = getEffectiveTrackVolume();
                     isCrossfading = false;
                 }
 
@@ -1772,7 +1792,7 @@
                 });
 
                 gsap.to(newAudio, {
-                    volume: targetVolume, duration: 1, ease: 'power1.inOut',
+                    volume: getEffectiveTrackVolume(track), duration: 1, ease: 'power1.inOut',
                     onComplete: () => {
                         isCrossfading = false;
                     }
@@ -1886,7 +1906,7 @@
             backBtn.addEventListener('click', () => {
                 if (isCrossfading) {
                     gsap.killTweensOf([activeAudio, nextAudio]);
-                    activeAudio.volume = targetVolume;
+                    activeAudio.volume = getEffectiveTrackVolume();
                     nextAudio.pause(); nextAudio.currentTime = 0; nextAudio.volume = 0;
                     isCrossfading = false;
                 }
@@ -1924,7 +1944,7 @@
 
             playerVolumeSlider.addEventListener('input', (e) => {
                 targetVolume = parseFloat(e.target.value);
-                gsap.to(activeAudio, { volume: targetVolume, duration: 0.2 });
+                gsap.to(activeAudio, { volume: getEffectiveTrackVolume(), duration: 0.2 });
             });
 
             let startTextContent = ''; let startIndex = 0; let startCursorVisible = true;
@@ -2025,7 +2045,9 @@
                     : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
             });
             volumeSlider.addEventListener('input', () => {
-                currentAudio.volume = volumeSlider.value; isMuted = false; currentAudio.muted = false;
+                currentAudio.volume = clampVolume(parseFloat(volumeSlider.value) * mainSoundMultiplier);
+                isMuted = false;
+                currentAudio.muted = false;
                 volumeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
             });
 
